@@ -1,0 +1,20 @@
+[package]
+name = "wot-form-worker"
+version = "0.1.0"
+edition = "2021"
+authors = ["Keif Gwinn <keif.gwinn@gmail.com>"]
+description = "Cloudflare Worker for WoT landing page form submissions"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+worker = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", default-features = false, features = ["wasmbind"] }
+console_error_panic_hook = "0.1"
+
+[profile.release]
+opt-level = "s"
+lto = true

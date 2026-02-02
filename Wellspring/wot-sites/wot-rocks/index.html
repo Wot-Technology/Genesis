@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WoT — Web of Thoughts</title>
+  <meta name="description" content="Track what you know, why you know it, and who told you. Your memory that works like your brain.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WoT — Web of Thoughts">
+  <meta property="og:description" content="Collab at the speed of thought. Git for your brain. Useful alone. Transformative together.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wot.rocks">
+
+  <link rel="stylesheet" href="../shared/design-system.css">
+
+  <style>
+    /* Page-specific styles */
+    .tagline {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .problem-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .problem-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .problem-list {
+      list-style: none;
+    }
+
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+    }
+
+    .problem-list li::before {
+      content: "✕";
+      color: var(--color-error);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .solution-list li::before {
+      content: "✓";
+      color: var(--color-success);
+    }
+
+    .value-progression {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .value-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      border-left: 2px solid var(--color-border);
+      position: relative;
+    }
+
+    .value-item::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: var(--space-4);
+      width: 10px;
+      height: 10px;
+      background: var(--color-primary);
+      border-radius: 50%;
+    }
+
+    .value-item__count {
+      font-family: var(--font-mono);
+      color: var(--color-primary);
+      font-size: var(--text-sm);
+    }
+
+    .value-item__text {
+      color: var(--color-text-muted);
+    }
+
+    .mirror-quote {
+      font-style: italic;
+      color: var(--color-text-dim);
+      border-left: 3px solid var(--color-primary);
+      padding-left: var(--space-4);
+      margin: var(--space-6) 0;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    @media (max-width: 768px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .comparison {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container nav__inner">
+      <a href="/" class="nav__logo">
+        <svg viewBox="0 0 600 208.54" height="36">
+          <defs>
+            <linearGradient id="logo-gradient" x1="128.81" y1="-67.66" x2="452.47" y2="255.99" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#fc0"/>
+              <stop offset="1" stop-color="#f7931e"/>
+            </linearGradient>
+          </defs>
+          <path d="M104.27,0A104.27,104.27,0,1,0,208.54,104.27,104.39,104.39,0,0,0,104.27,0ZM90.79,159h0a9,9,0,0,1-15.31,0l-32-52a9,9,0,0,1,7.65-13.7h0a9,9,0,0,1,7.66,4.28l32,52.05A9,9,0,0,1,90.79,159Zm13.44-27.46L96.56,119a9,9,0,0,1,0-9.41L113,82.79c4.53-7.38,5-10.82,5-12,0-7-6.31-13-13.78-13a14,14,0,0,0-12.67,7.94,8.82,8.82,0,0,1-8.06,5h-.14a9,9,0,0,1-7.93-13.23,32.87,32.87,0,0,1,28.8-17c17.43,0,32.16,13.84,32.16,30.22,0,6.18-3.05,12.76-5.39,17Zm60.84-24.57-32,52a9,9,0,0,1-15.31,0h0a9,9,0,0,1,0-9.4l32-52.05a9,9,0,0,1,7.66-4.28h0A9,9,0,0,1,165.07,106.92Zm278.6-54.19a51.54,51.54,0,1,0,51.54,51.54A51.6,51.6,0,0,0,443.67,52.73Zm0,82.87A31.33,31.33,0,1,1,475,104.27,31.36,31.36,0,0,1,443.67,135.6ZM377,63.85v53.9a43.55,43.55,0,0,1-4.43,18c-6.15,12.29-17.73,19.06-32.62,19.06C328.79,154.8,319.51,151,313,144c-6.55,7-15.82,10.82-27,10.82-14.89,0-26.47-6.77-32.62-19.06a43.65,43.65,0,0,1-4.44-18V63.85a10.11,10.11,0,0,1,20.22,0v53.83a23.61,23.61,0,0,0,2.53,9.47c1.71,3.19,5.06,7.44,14.31,7.44,7.23,0,11.85-2.51,14.54-7.89a23.79,23.79,0,0,0,2.3-9V83.05a10.11,10.11,0,1,1,20.22,0v34.63a23.61,23.61,0,0,0,2.53,9.47c1.71,3.19,5.06,7.44,14.31,7.44,7.23,0,11.85-2.51,14.54-7.89a23.79,23.79,0,0,0,2.3-9V63.85a10.11,10.11,0,1,1,20.21,0Zm223,.45A10.31,10.31,0,0,1,589.58,74h-30s0,0,0,0v70.7A10.11,10.11,0,0,1,549,154.79a10.32,10.32,0,0,1-9.65-10.41V74s0,0,0,0H509.05A10.1,10.1,0,0,1,499,63.39a10.31,10.31,0,0,1,10.41-9.65h80.53A10.1,10.1,0,0,1,600,64.3Z" fill="url(#logo-gradient)"/>
+        </svg>
+      </a>
+
+      <div class="domain-pills">
+        <a href="https://wot.rocks" class="domain-pill domain-pill--active">wot.rocks</a>
+        <a href="https://now.pub" class="domain-pill">now.pub</a>
+        <a href="https://wot.technology" class="domain-pill">wot.technology</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow animate-fade-in-up">Web of Thoughts</p>
+      <h1 class="hero__title hero__title--white animate-fade-in-up animate-delay-1">
+        Track what you know,<br>
+        <span style="background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">why you know it,</span><br>
+        and who told you.
+      </h1>
+      <p class="hero__subtitle animate-fade-in-up animate-delay-2">
+        Your memory that works like your brain. Private first. Shareable when ready.
+        Git for your brain — useful alone, transformative together.
+      </p>
+      <div class="hero__actions animate-fade-in-up animate-delay-3">
+        <a href="#waitlist" class="btn btn--primary btn--large">Join the Waitlist</a>
+        <a href="https://wot.technology" class="btn btn--secondary btn--large">Read the Spec</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Problem -->
+  <section class="section">
+    <div class="container">
+      <div class="problem-section">
+        <div>
+          <h2>The Problem Everyone Has</h2>
+          <p class="text-muted mt-4">
+            Remember that thing you read six months ago that would be perfect right now?
+          </p>
+          <ul class="problem-list mt-4">
+            <li>You can't find it</li>
+            <li>You can't remember where you saw it</li>
+            <li>You can't remember who told you</li>
+            <li>You can't remember <em>why</em> you believed it</li>
+          </ul>
+          <p class="text-muted mt-4">
+            The tools we have organize information around <strong>storage</strong>.
+            Not around how we actually think.
+          </p>
+        </div>
+
+        <div class="card" style="padding: var(--space-8);">
+          <h3 class="card__title">What WoT Does</h3>
+          <ul class="problem-list solution-list mt-4">
+            <li>Never lose that thing you read</li>
+            <li>Know WHY you saved something</li>
+            <li>Your own searchable, connected memory</li>
+            <li>Private. Local. Yours.</li>
+          </ul>
+          <p class="text-muted mt-4" style="font-size: var(--text-sm);">
+            Day 1, just you. Already useful. No network needed.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value Progression -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Grows With You</h2>
+        <p class="section__subtitle">
+          Start alone. Add friends. Build communities.
+        </p>
+      </div>
+
+      <div class="value-progression">
+        <div class="value-item">
+          <span class="value-item__count">1 user</span>
+          <span class="value-item__text">Personal memory that works. Your notes, decisions, reasoning — all connected.</span>
+        </div>
+        <div class="value-item">
+          <span class="value-item__count">10 users</span>
+          <span class="value-item__text">Small group with shared truth. "Remember when we discussed X?" — with receipts.</span>
+        </div>
+        <div class="value-item">
+          <span class="value-item__count">1,000 users</span>
+          <span class="value-item__text">Community with computed trust. Spam dies. Expert signal rises above noise.</span>
+        </div>
+        <div class="value-item">
+          <span class="value-item__count">1M users</span>
+          <span class="value-item__text">The web we were promised. Identity native. Trust computable. Your attention, your algorithm.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features -->
+  <section class="section">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">What Makes It Different</h2>
+      </div>
+
+      <div class="feature-grid">
+        <div class="card">
+          <div class="card__icon">🔗</div>
+          <h3 class="card__title">Because Chains</h3>
+          <p class="card__text">
+            Every thought links to the thoughts that led to it. Walk backwards and you get trails —
+            the actual path of reasoning, not just tags.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card__icon">✍️</div>
+          <h3 class="card__title">Attestation</h3>
+          <p class="card__text">
+            You don't just store information — you record your belief about it.
+            Your signature, your name, your reputation on the line.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card__icon">🌐</div>
+          <h3 class="card__title">Trust Computed</h3>
+          <p class="card__text">
+            No central authority decides who's trustworthy. Trust is computed from your
+            web of attestations — who you've vouched for, weighted by domain.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card__icon">🎛️</div>
+          <h3 class="card__title">Your Algo</h3>
+          <p class="card__text">
+            "Dear Algo" becomes "My Algo". Configure what surfaces.
+            Switch modes like gears. Your attention, not their engagement metrics.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Uncomfortable Mirror -->
+  <section class="section section--alt">
+    <div class="container container--narrow">
+      <div class="section__header">
+        <h2 class="section__title">Private Checkpoints</h2>
+        <p class="section__subtitle">
+          Platforms track your attention to optimize <em>their</em> goals.
+          WoT lets you track your attention to optimize <em>your</em> goals.
+        </p>
+      </div>
+
+      <div class="card" style="padding: var(--space-8);">
+        <p>What stays on your device — never syncs, never shares:</p>
+        <ul class="text-muted mt-4" style="list-style: disc; margin-left: var(--space-6);">
+          <li>What you opened</li>
+          <li>How long you spent</li>
+          <li>How many times you returned</li>
+          <li>How far you scrolled</li>
+        </ul>
+
+        <p class="text-muted mt-4">
+          Feeds YOUR salience model. No one else sees it.
+        </p>
+
+        <blockquote class="mirror-quote">
+          "You bookmarked 47 articles about productivity. You finished 3."
+        </blockquote>
+
+        <p class="text-dim" style="font-size: var(--text-sm);">
+          Not judgment. Just data. YOUR data.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Angle -->
+  <section class="section">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">AI That Shows Its Working</h2>
+        <p class="section__subtitle">
+          When an AI makes a claim, you can ask "show me the path."
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h4 class="card__title">Hallucinations Visible</h4>
+          <p class="card__text">
+            If the path is empty, that's visible. Claims without attestation chains
+            get flagged, not hidden.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4 class="card__title">Sources Auditable</h4>
+          <p class="card__text">
+            If the path traces back to sources you trust, that's visible too.
+            Verify before you believe.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4 class="card__title">Ceding Made Visible</h4>
+          <p class="card__text">
+            "Claude wrote it, I sent it" — action without attestation gets flagged.
+            Know when you're giving up judgment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">vs The Web We Have</h2>
+      </div>
+
+      <div class="comparison">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>WWW (1989)</th>
+              <th>WoT (2026)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Document</td>
+              <td>Thought</td>
+            </tr>
+            <tr>
+              <td>URL (can die)</td>
+              <td>CID (self-verifying)</td>
+            </tr>
+            <tr>
+              <td>No identity</td>
+              <td>Identity native</td>
+            </tr>
+            <tr>
+              <td>No trust (SEO gaming)</td>
+              <td>Trust computable</td>
+            </tr>
+            <tr>
+              <td>Algorithm: Google's</td>
+              <td>Algorithm: YOURS</td>
+            </tr>
+            <tr>
+              <td>Bots: adversaries</td>
+              <td>Bots: servants</td>
+            </tr>
+            <tr>
+              <td>Attention: harvested</td>
+              <td>Attention: sovereign</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist Form -->
+  <section class="section" id="waitlist">
+    <div class="container container--narrow">
+      <div class="signup-form" style="margin: 0 auto;">
+        <h3 class="signup-form__title">Join the Waitlist</h3>
+        <p class="signup-form__text">
+          Get notified when we launch. Early users help shape the product.
+        </p>
+
+        <form id="signup-form">
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              placeholder="you@example.com"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="name">Name (optional)</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-input"
+              placeholder="Your name"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="use_case">What would you build with it? (optional)</label>
+            <input
+              type="text"
+              id="use_case"
+              name="use_case"
+              class="form-input"
+              placeholder="Personal notes, team wiki, research tool..."
+            >
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--large" style="width: 100%;">
+            Join Waitlist
+          </button>
+
+          <div id="form-message" style="margin-top: var(--space-4); display: none;"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__text">
+        Collab at the speed of thought.
+      </p>
+      <ul class="footer__links">
+        <li><a href="https://now.pub" class="footer__link">now.pub</a></li>
+        <li><a href="https://wot.technology" class="footer__link">wot.technology</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('signup-form');
+    const message = document.getElementById('form-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const name = document.getElementById('name').value.trim() || null;
+      const use_case = document.getElementById('use_case').value.trim() || null;
+
+      message.style.display = 'block';
+      message.className = 'signup-form__success';
+      message.textContent = `You're on the waitlist! We'll email you at ${email} when we launch.`;
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>

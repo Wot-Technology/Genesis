@@ -1,0 +1,30 @@
+name = "wot-form-worker"
+main = "build/worker/shim.mjs"
+compatibility_date = "2024-01-01"
+
+[build]
+command = "cargo install -q worker-build && worker-build --release"
+
+# KV namespace for storing form submissions
+# Create with: wrangler kv:namespace create "WOT_SIGNUPS"
+[[kv_namespaces]]
+binding = "WOT_SIGNUPS"
+id = "YOUR_KV_NAMESPACE_ID"  # Replace after running: wrangler kv:namespace create "WOT_SIGNUPS"
+
+# Environment variables
+[vars]
+CORS_ORIGIN = "https://wot.rocks,https://wot.technology,https://now.pub"
+
+# Routes for each domain
+# Configure these after deploying
+# [[routes]]
+# pattern = "wot.rocks/api/*"
+# zone_name = "wot.rocks"
+
+# [[routes]]
+# pattern = "wot.technology/api/*"
+# zone_name = "wot.technology"
+
+# [[routes]]
+# pattern = "now.pub/api/*"
+# zone_name = "now.pub"

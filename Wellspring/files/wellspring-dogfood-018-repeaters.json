@@ -1,0 +1,310 @@
+{
+  "thoughts": [
+    {
+      "cid": "baf_a8201f23256edf72a2df8170586910e6",
+      "type": "identity",
+      "content": {
+        "name": "Nature",
+        "pubkey": "963cf0936803cacab8cfebed8cc3e90d90d62319eb0641a477ea69c2b4a64418",
+        "identity_type": "publisher"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398014",
+      "signature": "uOeudwACjLvBRVbtSg5eF8GMvlez7PEq+reM5VnzbHxHw25V4SXK8AzJg2MxsEkzRA7oKB+m9H++diOt/YLjCw=="
+    },
+    {
+      "cid": "baf_a56d087202f1db931c319b063458621e",
+      "type": "identity",
+      "content": {
+        "name": "New Scientist",
+        "pubkey": "4f81d7135ff8adbc2b8204d1fb2e43e676a203a890f9b9c6f2cc5f98ac27f54c",
+        "identity_type": "publisher"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398260",
+      "signature": "5PFG5wH9izl5Y/R0rpGfdN7MQVgTs7jZCXHMscZxjfOQLv47azsw/TCY0p12Fdfi+4g1/RZZL6KgJtGBUtO9DQ=="
+    },
+    {
+      "cid": "baf_6681881d85600731a19dc845c4d33dcb",
+      "type": "identity",
+      "content": {
+        "name": "Crystal Woo Times",
+        "pubkey": "8f1d212557e555e1ee1e55e3e51e6a15ce4bd89a62305a3a6627eaedd9550775",
+        "identity_type": "publisher"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398337",
+      "signature": "0FLBc4ufyFzJLI0k3ax5lQdTzhGKzDuFNkQSQBBJlqS8kLin8uSIFI2nCO7LjL/AOMHZXiJ7itVhNRanTo4NCA=="
+    },
+    {
+      "cid": "baf_88349a7b870b856d30b63f232d321946",
+      "type": "identity",
+      "content": {
+        "name": "Dr. Chen (Climate Researcher)",
+        "pubkey": "ff65356ea2db82962cbc7f7668324baeb43076d54c793be80d3761b0c393e0b9",
+        "identity_type": "author"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398410",
+      "signature": "Iex/6zHeU/mfcNXQXnoAQ026e2DKTUga717P+osfrLg2UsO2wedwxo93QKaLDd1ivo6ZEE2fYZ/QFMZ36NlwBg=="
+    },
+    {
+      "cid": "baf_fbbdbc1aa5d18ca9aea7bbc18fcc6518",
+      "type": "identity",
+      "content": {
+        "name": "Dr. Patel (Physicist)",
+        "pubkey": "b352b3451f9b3619999dbe90cd551ccf1a76179f6af2cd1b6d85c9ffbd4cd0c7",
+        "identity_type": "author"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398485",
+      "signature": "ZYouti29z0SSXEKzMows/3ASSYopdTQztiaMSTArxXBO96gR7SvouhdkaJ3QWYyRqxmpcjOrW3ehs14coiBlAg=="
+    },
+    {
+      "cid": "baf_5f697c1c6485af6b845a3458f9bec2bd",
+      "type": "identity",
+      "content": {
+        "name": "Mystic Moon",
+        "pubkey": "70af1f38908daa64d4a9cb3bbb446429d9738bd1755ae04baec5860e1bc72d8d",
+        "identity_type": "author"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398556",
+      "signature": "L+EiZdTodpliBJYKimC1zfzdSGv10uM2OPWpg9LJwjL86EwyTSWvrOGn66OTnTVsG0M4CeJCmVc1xF1B0XleAA=="
+    },
+    {
+      "cid": "baf_e4f8528154b49962f16a6cd5b62b866c",
+      "type": "identity",
+      "content": {
+        "name": "Prof. Climate (Domain Expert)",
+        "pubkey": "cdb7f3c5ee3451b7d3832f611f895db2c01ac6606a1f23d7b4779a1de235a0d8",
+        "identity_type": "expert"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398625",
+      "signature": "3Oh5S9RyixL+TweXCGYODEwz8a0/aeo0bIbKTIk6DRegZ8bWSA0wPjJgeUKhJl4OUjLHAYI93Uj1ciqgFPTWDQ=="
+    },
+    {
+      "cid": "baf_d16f0be123f92a0fbe98036aa1e0dbe5",
+      "type": "identity",
+      "content": {
+        "name": "Prof. Physics (Domain Expert)",
+        "pubkey": "bc2df939ee689a1540fd634aca258f439fb38e87161715607ccbd6e585f45146",
+        "identity_type": "expert"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398698",
+      "signature": "2QIWTtwpuGdbgbtHrfsLP2VAmJc14+g51HuHhwesE/gZdeSxkmCpMxYBq2gLBwmrl3WE95BTrgNon964JbWeCA=="
+    },
+    {
+      "cid": "baf_cf64d0e7d349a570b2ade9d2eb7b965b",
+      "type": "identity",
+      "content": {
+        "name": "Alice (Academic)",
+        "pubkey": "c9ac47e72685e96ff75652a4de235985b740fbe9b1413ae103d90098e1aeb699",
+        "identity_type": "user"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398767",
+      "signature": "KO/+65lwNEsuHJFLIltilKHSJWcNrIg3HmhMiqcyDsnFIAtn0jcDnl3rCGlC9brQdFsgQ1jZdl/QyTON2vE6Bw=="
+    },
+    {
+      "cid": "baf_c8f8637ded5bcfa3c48bfe916669ff24",
+      "type": "identity",
+      "content": {
+        "name": "Bob (Journalist)",
+        "pubkey": "b41ee109fa4f045d4f0dea6dcabf20ea426a2b3d443221e4bcd44199e7b41bfa",
+        "identity_type": "user"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398904",
+      "signature": "gJk6sB6bEf/VdKgtSqgHhFj6LJ+53FWJ+I+f3LwDDnasE1Xequs4yNc3S0Piv2ZAuzWkMG4ubd1zACaH+r21AQ=="
+    },
+    {
+      "cid": "baf_eee696c1a37266d6877d35dda30db8b5",
+      "type": "identity",
+      "content": {
+        "name": "Carol (Student)",
+        "pubkey": "267a2cc9a681f49ac0bcb0cb36812bbf4b50afaa8d8e87753c6c378015bff704",
+        "identity_type": "user"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.398975",
+      "signature": "AX7pW5PmnPBuLa5OZz01oTNiRwwAqPDhInvL9EOmIjbGvfmkpWwPco+1N8VPIDF8p/ZI0XHak1ObtLWwrZ8qDg=="
+    },
+    {
+      "cid": "baf_3b3432f78cf5fcb2c298a8616f52b7b6",
+      "type": "identity",
+      "content": {
+        "name": "Dave (General Public)",
+        "pubkey": "9bea4d439e14b3eb7d42dd3ce64f11aaa52cf8cde0d5454ee2791143dda2834e",
+        "identity_type": "user"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:22:06.399042",
+      "signature": "1ZH4HvxODEAR6GFKIXxktBZzIoY57hGLrCuB6rUV/PBDJAKmDr23bkwjtJoj66n17gkhEDux4bSFvDr/0aTmDw=="
+    },
+    {
+      "cid": "baf_ce6d69595328a17c54087dbcad054fbc",
+      "type": "article",
+      "content": {
+        "title": "Ocean Temperature Rise Exceeds Projections",
+        "abstract": "New satellite data reveals ocean warming rates 40% higher than IPCC models predicted, with significant implications for sea level rise forecasts.",
+        "domain": "climate"
+      },
+      "created_by": "baf_88349a7b870b856d30b63f232d321946",
+      "because": [
+        "baf_88349a7b870b856d30b63f232d321946"
+      ],
+      "created_at": "2026-01-30T16:22:06.399100",
+      "signature": "ZgrYTatv+WizkeGTnRrQka6jYtxwQHaCHxt8ZtsiJgD/8qrTG1DKRy617lFgWvzw6RB1A5doIBM5q3DZLnO6BQ=="
+    },
+    {
+      "cid": "baf_fa2e17e00502c2352f861c2ce0358635",
+      "type": "attestation",
+      "content": {
+        "on": "baf_ce6d69595328a17c54087dbcad054fbc",
+        "weight": 1.0,
+        "aspect": "peer_reviewed",
+        "note": "Passed rigorous peer review"
+      },
+      "created_by": "baf_a8201f23256edf72a2df8170586910e6",
+      "because": [
+        "baf_a8201f23256edf72a2df8170586910e6",
+        "baf_ce6d69595328a17c54087dbcad054fbc"
+      ],
+      "created_at": "2026-01-30T16:22:06.399142",
+      "signature": "9eBUfUyuQ8guqs08Jw0cfioZofDGrKtR5E6HpsQ8iItfZzoBYQ4rJ3t6OJ3VOy17qw484fw3HPfY7nTNZQSVAQ=="
+    },
+    {
+      "cid": "baf_dbf1922aeec2b6a5ffa7aff202172014",
+      "type": "article",
+      "content": {
+        "title": "Crystal Vibrations Prove Climate Change is Planetary Awakening",
+        "abstract": "My rose quartz collection has revealed that rising temperatures are actually Gaia's consciousness expanding. Scientists are missing the spiritual dimension.",
+        "domain": "climate"
+      },
+      "created_by": "baf_5f697c1c6485af6b845a3458f9bec2bd",
+      "because": [
+        "baf_5f697c1c6485af6b845a3458f9bec2bd"
+      ],
+      "created_at": "2026-01-30T16:22:06.399186",
+      "signature": "QIjh7npGsv5SgzeIwuRZmi5e69DmgA8hO+Lb/KmGcxOiTa8FIM7tTK1lgCY0YRlmyQf8SIWSYkx/GNqZVGfXCw=="
+    },
+    {
+      "cid": "baf_f4e0d4cc5fcbaa28e61afbab0b61e9fd",
+      "type": "attestation",
+      "content": {
+        "on": "baf_dbf1922aeec2b6a5ffa7aff202172014",
+        "weight": 1.0,
+        "aspect": "spiritually_verified",
+        "note": "Aligned with cosmic truth"
+      },
+      "created_by": "baf_6681881d85600731a19dc845c4d33dcb",
+      "because": [
+        "baf_6681881d85600731a19dc845c4d33dcb",
+        "baf_dbf1922aeec2b6a5ffa7aff202172014"
+      ],
+      "created_at": "2026-01-30T16:22:06.399226",
+      "signature": "64sjyjSUsQLYSkQ/d+Cu6meg3az+uilb2YFTm3soX95RL0Pm9JmDXTYelH1xLNl5rsiA+GRO50jfVY9i+m0zAQ=="
+    },
+    {
+      "cid": "baf_d8b9831b394bcc6aef1ec5cdcd7fe895",
+      "type": "attestation",
+      "content": {
+        "on": "baf_e4f8528154b49962f16a6cd5b62b866c",
+        "aspect": "repeater",
+        "domains": [
+          "climate",
+          "environment"
+        ],
+        "weight": 1.0
+      },
+      "created_by": "baf_cf64d0e7d349a570b2ade9d2eb7b965b",
+      "because": [
+        "baf_cf64d0e7d349a570b2ade9d2eb7b965b",
+        "baf_e4f8528154b49962f16a6cd5b62b866c"
+      ],
+      "created_at": "2026-01-30T16:22:06.399312",
+      "signature": "paIS/3NTXNsSeRbTLiuFmBrOQSGqhqQJ7EOxb/91fPNjGNdhPXHsif0MwRH9+iaJXMEGn7lTUbwwjdiT09N0Cw=="
+    },
+    {
+      "cid": "baf_5d29e8a3872f5535d0fcc7f4618e2354",
+      "type": "attestation",
+      "content": {
+        "on": "baf_e4f8528154b49962f16a6cd5b62b866c",
+        "aspect": "repeater",
+        "domains": [
+          "climate",
+          "environment"
+        ],
+        "weight": 1.0
+      },
+      "created_by": "baf_c8f8637ded5bcfa3c48bfe916669ff24",
+      "because": [
+        "baf_c8f8637ded5bcfa3c48bfe916669ff24",
+        "baf_e4f8528154b49962f16a6cd5b62b866c"
+      ],
+      "created_at": "2026-01-30T16:22:06.399355",
+      "signature": "S7naR5+FYjMUj4e9nn8trizI1vThxQWJXM0aI2kukn0/7cSKDybAJqGGqxg33RG3XPaClNefQnu8U7D2HJEMDA=="
+    },
+    {
+      "cid": "baf_b5870bd07af3d1449cbdd99e95ee2aae",
+      "type": "attestation",
+      "content": {
+        "on": "baf_e4f8528154b49962f16a6cd5b62b866c",
+        "aspect": "repeater",
+        "domains": [
+          "climate",
+          "environment"
+        ],
+        "weight": 1.0
+      },
+      "created_by": "baf_eee696c1a37266d6877d35dda30db8b5",
+      "because": [
+        "baf_eee696c1a37266d6877d35dda30db8b5",
+        "baf_e4f8528154b49962f16a6cd5b62b866c"
+      ],
+      "created_at": "2026-01-30T16:22:06.399395",
+      "signature": "zFJsQziIJwtFvO72H2r0zITv104iHjbxCe5aUYtq9S0BM9FyRcm18RcBMzxH7K+49rgWgbfoHJYeDSI1KDQxBw=="
+    },
+    {
+      "cid": "baf_6ced8ad16cd18005ea51398631b18a10",
+      "type": "attestation",
+      "content": {
+        "on": "baf_e4f8528154b49962f16a6cd5b62b866c",
+        "aspect": "repeater",
+        "domains": [
+          "climate",
+          "environment"
+        ],
+        "weight": 1.0
+      },
+      "created_by": "baf_3b3432f78cf5fcb2c298a8616f52b7b6",
+      "because": [
+        "baf_3b3432f78cf5fcb2c298a8616f52b7b6",
+        "baf_e4f8528154b49962f16a6cd5b62b866c"
+      ],
+      "created_at": "2026-01-30T16:22:06.399435",
+      "signature": "JKxIVrbpuJ8Yl7PYUe9SCh7wK2jY9ufCfHsIC0yYvlQ4xllX/cVdNWY45CHIeRA8yGXMLPEeXgI0GCOrDvDIAA=="
+    }
+  ],
+  "trust_examples": {
+    "alice_to_chen_no_rep": 0.5760000000000001,
+    "alice_to_chen_with_rep": 0.7200000000000001,
+    "dave_to_chen_no_rep": 0.09909043200000002,
+    "dave_to_chen_with_rep": 0.12386304000000002
+  }
+}

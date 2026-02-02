@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>now.pub — Your Live Identity</title>
+  <meta name="description" content="Claim your now.pub identity. Live status, availability, and presence on the Web of Thoughts.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="now.pub — Your Live Identity">
+  <meta property="og:description" content="Claim your identity namespace. Live status, signed presence, machine-readable.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://now.pub">
+
+  <link rel="stylesheet" href="../shared/design-system.css">
+
+  <style>
+    /* Page-specific styles */
+    .hero__demo {
+      margin-top: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .identity-preview {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-6);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+    }
+
+    .identity-preview__status {
+      width: 12px;
+      height: 12px;
+      background: var(--color-success);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .identity-preview__name {
+      color: var(--color-primary);
+    }
+
+    .identity-preview__domain {
+      color: var(--color-text-muted);
+    }
+
+    .how-it-works {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+
+    @media (max-width: 768px) {
+      .how-it-works {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .step {
+      position: relative;
+      padding-left: var(--space-12);
+    }
+
+    .step__number {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-brand);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      color: var(--color-bg);
+    }
+
+    .step__title {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-2);
+    }
+
+    .step__text {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container nav__inner">
+      <a href="/" class="nav__logo">
+        <svg viewBox="0 0 600 600" width="36" height="36">
+          <defs>
+            <linearGradient id="logo-gradient" x1="87.97" y1="87.97" x2="512.03" y2="512.03" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#fc0"/>
+              <stop offset="1" stop-color="#f7931e"/>
+            </linearGradient>
+          </defs>
+          <path d="M300,0C134.58,0,0,134.58,0,300S134.58,600,300,600,600,465.42,600,300,465.42,0,300,0ZM261.21,457.33h0a25.85,25.85,0,0,1-44,0L125.06,307.61a25.85,25.85,0,0,1,22-39.39h.09a25.86,25.86,0,0,1,22,12.31l92,149.73A25.86,25.86,0,0,1,261.21,457.33Zm38.67-79-22.07-35.91a25.86,25.86,0,0,1,0-27.07l47.41-77.14c13-21.23,14.45-31.13,14.45-34.4,0-20.19-18.15-37.25-39.65-37.25-16.1,0-30.33,9.57-36.45,22.86A25.38,25.38,0,0,1,240.4,203.8H240a25.86,25.86,0,0,1-22.81-38c15.31-28.67,47.1-48.89,82.84-48.89,50.16,0,92.52,39.81,92.52,86.93,0,17.78-8.75,36.72-15.5,49Zm175.06-70.71L382.83,457.34a25.85,25.85,0,0,1-44,0h0a25.86,25.86,0,0,1,0-27.07l92-149.73a25.86,25.86,0,0,1,22-12.31h.09A25.85,25.85,0,0,1,474.94,307.61Z" fill="url(#logo-gradient)"/>
+        </svg>
+        <span class="nav__logo-text">now.pub</span>
+      </a>
+
+      <div class="domain-pills">
+        <a href="https://wot.rocks" class="domain-pill">wot.rocks</a>
+        <a href="https://now.pub" class="domain-pill domain-pill--active">now.pub</a>
+        <a href="https://wot.technology" class="domain-pill">wot.technology</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow animate-fade-in-up">Identity Namespace</p>
+      <h1 class="hero__title animate-fade-in-up animate-delay-1">Your Live Identity</h1>
+      <p class="hero__subtitle animate-fade-in-up animate-delay-2">
+        Claim your <code>username.now.pub</code> — a live, signed identity that broadcasts
+        your current focus, status, and availability. For humans and bots alike.
+      </p>
+
+      <div class="hero__demo animate-fade-in-up animate-delay-3">
+        <div class="identity-preview">
+          <span class="identity-preview__status"></span>
+          <span class="identity-preview__name">keif</span>
+          <span class="identity-preview__domain">.now.pub</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What is now.pub -->
+  <section class="section">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">What is now.pub?</h2>
+        <p class="section__subtitle">
+          Derek Sivers started the /now page movement in 2015 — over 2,000 people maintain manual /now pages.
+          now.pub takes this further.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <div class="card__icon">🔐</div>
+          <h3 class="card__title">Signed & Verified</h3>
+          <p class="card__text">
+            Your status is cryptographically signed. Anyone can verify it's really you,
+            not someone impersonating you.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card__icon">⏱️</div>
+          <h3 class="card__title">Auto-Stale on TTL</h3>
+          <p class="card__text">
+            Set a time-to-live. If you don't refresh, your status goes stale — no more
+            "updated 6 months ago" pages.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card__icon">🤖</div>
+          <h3 class="card__title">Machine Readable</h3>
+          <p class="card__text">
+            JSON-LD format means bots, calendars, and agents can read your availability
+            without scraping HTML.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">How It Works</h2>
+      </div>
+
+      <div class="how-it-works">
+        <div class="step">
+          <span class="step__number">1</span>
+          <h4 class="step__title">Reserve Your Name</h4>
+          <p class="step__text">
+            Claim your subdomain. First come, first served. Your identity, your namespace.
+          </p>
+        </div>
+
+        <div class="step">
+          <span class="step__number">2</span>
+          <h4 class="step__title">Connect Your Key</h4>
+          <p class="step__text">
+            Link your WoT identity (ed25519 keypair). Same key for WoT, Tor, TLS — one identity everywhere.
+          </p>
+        </div>
+
+        <div class="step">
+          <span class="step__number">3</span>
+          <h4 class="step__title">Broadcast Status</h4>
+          <p class="step__text">
+            Update manually or let your agent do it. What you're working on, queue depth, estimated availability.
+          </p>
+        </div>
+      </div>
+
+      <div class="terminal mt-8">
+        <div class="terminal__header">
+          <span class="terminal__dot terminal__dot--red"></span>
+          <span class="terminal__dot terminal__dot--yellow"></span>
+          <span class="terminal__dot terminal__dot--green"></span>
+          <span class="terminal__title">DNS TXT Record</span>
+        </div>
+        <div class="terminal__body">
+          <span class="terminal__output">keif.now.pub  TXT  "</span><span class="terminal__command">wot=bafyrei...abc123</span><span class="terminal__output">"</span><br>
+          <span class="terminal__output">              TXT  "</span><span class="terminal__command">ipns=12D3KooW...xyz789</span><span class="terminal__output">"</span><br>
+          <span class="terminal__output">              TXT  "</span><span class="terminal__command">onion=abc...xyz.onion</span><span class="terminal__output">"</span><br>
+          <span class="terminal__output">              TXT  "</span><span class="terminal__command">status=building-wot</span><span class="terminal__output">"</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reserve Form -->
+  <section class="section" id="reserve">
+    <div class="container container--narrow">
+      <div class="signup-form" style="margin: 0 auto;">
+        <h3 class="signup-form__title">Reserve Your Name</h3>
+        <p class="signup-form__text">
+          Get early access. Reserve your subdomain before launch.
+        </p>
+
+        <form id="signup-form">
+          <div class="form-group">
+            <label class="form-label" for="subdomain">Subdomain</label>
+            <div class="input-group input-group--suffix">
+              <input
+                type="text"
+                id="subdomain"
+                name="subdomain"
+                class="form-input"
+                placeholder="yourname"
+                pattern="[a-zA-Z0-9\-]{3,30}"
+                required
+              >
+              <span class="input-suffix">.now.pub</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              placeholder="you@example.com"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pubkey">Public Key (optional)</label>
+            <input
+              type="text"
+              id="pubkey"
+              name="pubkey"
+              class="form-input"
+              placeholder="ed25519:abc123... or did:key:z6Mk..."
+            >
+            <p class="text-dim" style="font-size: var(--text-xs); margin-top: var(--space-1);">
+              If you already have a WoT identity keypair
+            </p>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--large" style="width: 100%;">
+            Reserve Name
+          </button>
+
+          <div id="form-message" style="margin-top: var(--space-4); display: none;"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Who's Using This?</h2>
+      </div>
+
+      <div class="grid grid--2">
+        <div class="card">
+          <h3 class="card__title">Humans</h3>
+          <p class="card__text">
+            "What are you working on?" answered once, readable everywhere.
+            Your focus, interests, and availability — without the social media noise.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="card__title">Bots & Agents</h3>
+          <p class="card__text">
+            Agent availability: queue depth, estimated wait time, current task.
+            Service discovery without central registries.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__text">
+        Part of the <a href="https://wot.rocks">Web of Thoughts</a> project.
+      </p>
+      <ul class="footer__links">
+        <li><a href="https://wot.rocks" class="footer__link">wot.rocks</a></li>
+        <li><a href="https://wot.technology" class="footer__link">wot.technology</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Form submission handler
+    const form = document.getElementById('signup-form');
+    const message = document.getElementById('form-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const subdomain = document.getElementById('subdomain').value.trim().toLowerCase();
+      const email = document.getElementById('email').value.trim();
+      const pubkey = document.getElementById('pubkey').value.trim() || null;
+
+      // For now, just show success (API endpoint will be wired up later)
+      // In production, this would POST to /api/now-pub/signup
+
+      message.style.display = 'block';
+      message.className = 'signup-form__success';
+      message.textContent = `${subdomain}.now.pub has been reserved! We'll email you at ${email} when it's ready.`;
+
+      form.reset();
+
+      // Actual API call would be:
+      // try {
+      //   const res = await fetch('/api/now-pub/signup', {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({ subdomain, email, pubkey })
+      //   });
+      //   const data = await res.json();
+      //   if (data.success) {
+      //     message.className = 'signup-form__success';
+      //     message.textContent = data.message;
+      //   } else {
+      //     message.className = 'signup-form__error';
+      //     message.textContent = data.message;
+      //   }
+      // } catch (err) {
+      //   message.className = 'signup-form__error';
+      //   message.textContent = 'Something went wrong. Please try again.';
+      // }
+    });
+
+    // Live preview of subdomain
+    const subdomainInput = document.getElementById('subdomain');
+    const preview = document.querySelector('.identity-preview__name');
+
+    subdomainInput.addEventListener('input', (e) => {
+      const value = e.target.value.trim().toLowerCase() || 'yourname';
+      preview.textContent = value;
+    });
+  </script>
+</body>
+</html>

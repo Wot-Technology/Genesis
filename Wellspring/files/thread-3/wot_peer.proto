@@ -1,0 +1,170 @@
+syntax = "proto3";
+
+package wot;
+
+// ============================================================================
+// CORE TYPES
+// ============================================================================
+
+message ThoughtPayload {
+  bytes cid = 1;                    // 36-byte IPFS-compatible CID
+  bytes schema_cid = 2;             // Schema this thought conforms to
+  bytes thought_cbor = 3;           // Canonical CBOR (for CID verification)
+  bytes thought_proto = 4;          // Protobuf-encoded (for fast parse)
+  bytes signature = 5;              // Ed25519 over CID
+  string source = 6;                // e.g., "agent-model/claude-opus"
+}
+
+message ThoughtAck {
+  bytes cid = 1;
+  AckStatus status = 2;
+  string message = 3;
+}
+
+enum AckStatus {
+  ACK_UNKNOWN = 0;
+  ACK_ACCEPTED = 1;
+  ACK_FLAGGED = 2;
+  ACK_QUARANTINED = 3;
+  ACK_REJECTED = 4;
+}
+
+// ============================================================================
+// HANDSHAKE
+// ============================================================================
+
+message HelloRequest {
+  bytes identity_cid = 1;
+  uint32 protocol_version = 2;      // 0x0001 for v1
+  repeated string capabilities = 3;  // ["sync", "push", "query"]
+  int64 timestamp = 4;
+  bytes signature = 5;
+}
+
+message HelloResponse {
+  bytes identity_cid = 1;
+  repeated string accepted_capabilities = 2;
+  string session_id = 3;
+  bytes signature = 4;
+}
+
+message SchemaRequest {
+  bytes pool_cid = 1;
+  repeated bytes known_schemas = 2;
+  uint32 max_proto_size = 3;
+}
+
+message SchemaResponse {
+  bytes pool_rules_cid = 1;
+  repeated SchemaBundle required = 2;
+  RateLimits rate_limits = 3;
+  string timestamp_unit = 4;        // "ms"
+}
+
+message SchemaBundle {
+  bytes schema_cid = 1;
+  bytes proto_descriptor = 2;
+  uint32 proto_version = 3;
+}
+
+message RateLimits {
+  uint32 thoughts_per_minute = 1;
+  uint32 bytes_per_minute = 2;
+  uint32 max_payload_bytes = 3;
+}
+
+// ============================================================================
+// SYNC
+// ============================================================================
+
+message BloomRequest {
+  bytes filter_bytes = 1;
+  uint32 filter_k = 2;              // Number of hash functions
+  uint32 filter_m = 3;              // Filter size in bits
+  uint32 thought_count = 4;
+  int64 timestamp = 5;
+  bytes pool_cid = 6;               // Optional: scope to pool
+}
+
+message BloomResponse {
+  bytes filter_bytes = 1;
+  uint32 filter_k = 2;
+  uint32 filter_m = 3;
+  uint32 thought_count = 4;
+}
+
+message WantRequest {
+  repeated bytes cids = 1;
+  Priority priority = 2;
+}
+
+enum Priority {
+  PRIORITY_NORMAL = 0;
+  PRIORITY_HIGH = 1;
+  PRIORITY_LOW = 2;
+}
+
+// ============================================================================
+// QUERY (Thread 3 addition for RAG-based retrieval)
+// ============================================================================
+
+message QueryRequest {
+  string query_text = 1;            // Natural language query
+  uint32 top_k = 2;                 // Max results
+  bytes pool_cid = 3;               // Optional: scope to pool
+  repeated bytes include_cids = 4;  // Always include these
+}
+
+message QueryResponse {
+  repeated QueryResult results = 1;
+}
+
+message QueryResult {
+  bytes cid = 1;
+  float similarity = 2;
+  string snippet = 3;
+  ThoughtPayload thought = 4;       // Full thought if requested
+}
+
+// ============================================================================
+// MAINTENANCE
+// ============================================================================
+
+message HeartbeatRequest {
+  int64 timestamp = 1;
+  uint32 thought_count = 2;
+  uint32 pending_sync = 3;
+  bytes last_cid = 4;
+}
+
+message HeartbeatResponse {
+  int64 timestamp = 1;
+  uint32 thought_count = 2;
+  bool sync_needed = 3;
+}
+
+message Ack {
+  bool ok = 1;
+  string message = 2;
+}
+
+// ============================================================================
+// SERVICE
+// ============================================================================
+
+service WotPeer {
+  // Handshake
+  rpc Hello(HelloRequest) returns (HelloResponse);
+  rpc GetSchemas(SchemaRequest) returns (SchemaResponse);
+
+  // Sync
+  rpc ExchangeBloom(BloomRequest) returns (BloomResponse);
+  rpc Want(WantRequest) returns (stream ThoughtPayload);
+  rpc Push(stream ThoughtPayload) returns (stream ThoughtAck);
+
+  // Query (semantic search via Thread 2 RAG)
+  rpc Query(QueryRequest) returns (QueryResponse);
+
+  // Maintenance
+  rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
+}

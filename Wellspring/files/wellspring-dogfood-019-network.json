@@ -1,0 +1,429 @@
+{
+  "nodes": {
+    "Alice": {
+      "cid": "baf_ffa24b2bcbbb47f3...",
+      "thoughts": 27
+    },
+    "Bob": {
+      "cid": "baf_cc8fbb9d3f2d6135...",
+      "thoughts": 27
+    },
+    "Carol": {
+      "cid": "baf_156917d601db824d...",
+      "thoughts": 27
+    },
+    "Dave": {
+      "cid": "baf_e8b2b3150f6a693d...",
+      "thoughts": 27
+    },
+    "Eve": {
+      "cid": "baf_4cc25f76bd3a97f2...",
+      "thoughts": 27
+    },
+    "Frank": {
+      "cid": "baf_c0d17640cfb2e9a5...",
+      "thoughts": 27
+    },
+    "Grace": {
+      "cid": "baf_14b636e8df0c24c6...",
+      "thoughts": 27
+    },
+    "Henry": {
+      "cid": "baf_b818c17738ab32f6...",
+      "thoughts": 27
+    },
+    "Ivy": {
+      "cid": "baf_280a6e95eb5b2541...",
+      "thoughts": 27
+    },
+    "Jack": {
+      "cid": "baf_0f82b9581ce22642...",
+      "thoughts": 27
+    },
+    "Kate": {
+      "cid": "baf_e616d973c016c641...",
+      "thoughts": 27
+    },
+    "Leo": {
+      "cid": "baf_5a025d4dafa9d347...",
+      "thoughts": 27
+    }
+  },
+  "peerings": [
+    [
+      "Alice",
+      "Bob"
+    ],
+    [
+      "Alice",
+      "Carol"
+    ],
+    [
+      "Alice",
+      "Dave"
+    ],
+    [
+      "Bob",
+      "Carol"
+    ],
+    [
+      "Bob",
+      "Dave"
+    ],
+    [
+      "Carol",
+      "Dave"
+    ],
+    [
+      "Eve",
+      "Frank"
+    ],
+    [
+      "Eve",
+      "Grace"
+    ],
+    [
+      "Eve",
+      "Henry"
+    ],
+    [
+      "Frank",
+      "Grace"
+    ],
+    [
+      "Frank",
+      "Henry"
+    ],
+    [
+      "Grace",
+      "Henry"
+    ],
+    [
+      "Ivy",
+      "Jack"
+    ],
+    [
+      "Ivy",
+      "Kate"
+    ],
+    [
+      "Ivy",
+      "Leo"
+    ],
+    [
+      "Jack",
+      "Kate"
+    ],
+    [
+      "Jack",
+      "Leo"
+    ],
+    [
+      "Kate",
+      "Leo"
+    ],
+    [
+      "Carol",
+      "Eve"
+    ],
+    [
+      "Dave",
+      "Frank"
+    ],
+    [
+      "Eve",
+      "Ivy"
+    ],
+    [
+      "Alice",
+      "Jack"
+    ]
+  ],
+  "sync_stats": {
+    "rounds": [
+      {
+        "round": 1,
+        "syncs": [
+          {
+            "pair": "Alice\u2194Bob",
+            "new": 4
+          },
+          {
+            "pair": "Alice\u2194Carol",
+            "new": 6
+          },
+          {
+            "pair": "Alice\u2194Dave",
+            "new": 8
+          },
+          {
+            "pair": "Bob\u2194Carol",
+            "new": 2
+          },
+          {
+            "pair": "Bob\u2194Dave",
+            "new": 2
+          },
+          {
+            "pair": "Carol\u2194Dave",
+            "new": 2
+          },
+          {
+            "pair": "Eve\u2194Frank",
+            "new": 4
+          },
+          {
+            "pair": "Eve\u2194Grace",
+            "new": 6
+          },
+          {
+            "pair": "Eve\u2194Henry",
+            "new": 8
+          },
+          {
+            "pair": "Frank\u2194Grace",
+            "new": 2
+          },
+          {
+            "pair": "Frank\u2194Henry",
+            "new": 2
+          },
+          {
+            "pair": "Grace\u2194Henry",
+            "new": 2
+          },
+          {
+            "pair": "Ivy\u2194Jack",
+            "new": 4
+          },
+          {
+            "pair": "Ivy\u2194Kate",
+            "new": 6
+          },
+          {
+            "pair": "Ivy\u2194Leo",
+            "new": 8
+          },
+          {
+            "pair": "Jack\u2194Kate",
+            "new": 2
+          },
+          {
+            "pair": "Jack\u2194Leo",
+            "new": 2
+          },
+          {
+            "pair": "Kate\u2194Leo",
+            "new": 2
+          },
+          {
+            "pair": "Carol\u2194Eve",
+            "new": 16
+          },
+          {
+            "pair": "Dave\u2194Frank",
+            "new": 16
+          },
+          {
+            "pair": "Eve\u2194Ivy",
+            "new": 24
+          },
+          {
+            "pair": "Alice\u2194Jack",
+            "new": 16
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "syncs": [
+          {
+            "pair": "Alice\u2194Bob",
+            "new": 8
+          },
+          {
+            "pair": "Alice\u2194Carol",
+            "new": 16
+          },
+          {
+            "pair": "Alice\u2194Dave",
+            "new": 8
+          },
+          {
+            "pair": "Bob\u2194Carol",
+            "new": 8
+          },
+          {
+            "pair": "Bob\u2194Dave",
+            "new": 0
+          },
+          {
+            "pair": "Carol\u2194Dave",
+            "new": 0
+          },
+          {
+            "pair": "Eve\u2194Frank",
+            "new": 8
+          },
+          {
+            "pair": "Eve\u2194Grace",
+            "new": 16
+          },
+          {
+            "pair": "Eve\u2194Henry",
+            "new": 16
+          },
+          {
+            "pair": "Frank\u2194Grace",
+            "new": 0
+          },
+          {
+            "pair": "Frank\u2194Henry",
+            "new": 0
+          },
+          {
+            "pair": "Grace\u2194Henry",
+            "new": 0
+          },
+          {
+            "pair": "Ivy\u2194Jack",
+            "new": 8
+          },
+          {
+            "pair": "Ivy\u2194Kate",
+            "new": 16
+          },
+          {
+            "pair": "Ivy\u2194Leo",
+            "new": 16
+          },
+          {
+            "pair": "Jack\u2194Kate",
+            "new": 0
+          },
+          {
+            "pair": "Jack\u2194Leo",
+            "new": 0
+          },
+          {
+            "pair": "Kate\u2194Leo",
+            "new": 0
+          },
+          {
+            "pair": "Carol\u2194Eve",
+            "new": 0
+          },
+          {
+            "pair": "Dave\u2194Frank",
+            "new": 0
+          },
+          {
+            "pair": "Eve\u2194Ivy",
+            "new": 0
+          },
+          {
+            "pair": "Alice\u2194Jack",
+            "new": 0
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "syncs": [
+          {
+            "pair": "Alice\u2194Bob",
+            "new": 0
+          },
+          {
+            "pair": "Alice\u2194Carol",
+            "new": 0
+          },
+          {
+            "pair": "Alice\u2194Dave",
+            "new": 0
+          },
+          {
+            "pair": "Bob\u2194Carol",
+            "new": 0
+          },
+          {
+            "pair": "Bob\u2194Dave",
+            "new": 0
+          },
+          {
+            "pair": "Carol\u2194Dave",
+            "new": 0
+          },
+          {
+            "pair": "Eve\u2194Frank",
+            "new": 0
+          },
+          {
+            "pair": "Eve\u2194Grace",
+            "new": 0
+          },
+          {
+            "pair": "Eve\u2194Henry",
+            "new": 0
+          },
+          {
+            "pair": "Frank\u2194Grace",
+            "new": 0
+          },
+          {
+            "pair": "Frank\u2194Henry",
+            "new": 0
+          },
+          {
+            "pair": "Grace\u2194Henry",
+            "new": 0
+          },
+          {
+            "pair": "Ivy\u2194Jack",
+            "new": 0
+          },
+          {
+            "pair": "Ivy\u2194Kate",
+            "new": 0
+          },
+          {
+            "pair": "Ivy\u2194Leo",
+            "new": 0
+          },
+          {
+            "pair": "Jack\u2194Kate",
+            "new": 0
+          },
+          {
+            "pair": "Jack\u2194Leo",
+            "new": 0
+          },
+          {
+            "pair": "Kate\u2194Leo",
+            "new": 0
+          },
+          {
+            "pair": "Carol\u2194Eve",
+            "new": 0
+          },
+          {
+            "pair": "Dave\u2194Frank",
+            "new": 0
+          },
+          {
+            "pair": "Eve\u2194Ivy",
+            "new": 0
+          },
+          {
+            "pair": "Alice\u2194Jack",
+            "new": 0
+          }
+        ]
+      }
+    ],
+    "total_synced": 264
+  },
+  "propagation_check": {
+    "leo_sees_alice": true
+  }
+}

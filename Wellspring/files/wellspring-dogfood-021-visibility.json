@@ -1,0 +1,32 @@
+{
+  "nodes": {
+    "Alice": {
+      "thoughts": 9,
+      "filtered": 9
+    },
+    "Bob": {
+      "thoughts": 15,
+      "filtered": 0
+    },
+    "Carol": {
+      "thoughts": 13,
+      "filtered": 0
+    },
+    "Eve": {
+      "thoughts": 11,
+      "filtered": 0
+    }
+  },
+  "pools": {
+    "public": "baf_db2c81240139c6c6d0bad0e196347c93",
+    "internal": "baf_d1e93338bb6019a890a5e173444599ec",
+    "partner": "baf_37d931db760766e54c5defeab390f84a"
+  },
+  "thoughts": {
+    "public": "baf_d233e9508233268d04458ad2050f1360",
+    "internal": "baf_43642a5f3c13815e319927444b8d29ad",
+    "partner": "baf_30c3f89df7418b5c8e0b9b34fbfbf834",
+    "local_secret": "baf_bb40dd6a40edbeaab50f50dd97ed547a",
+    "dm_bob": "baf_8b994d9d572ee600518698489242e910"
+  }
+}

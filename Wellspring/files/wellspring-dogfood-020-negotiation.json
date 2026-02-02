@@ -1,0 +1,62 @@
+{
+  "nodes": {
+    "Alice": {
+      "thoughts": 23
+    },
+    "Bob": {
+      "thoughts": 23
+    },
+    "Carol": {
+      "thoughts": 24
+    },
+    "Dave": {
+      "thoughts": 1
+    },
+    "Eve": {
+      "thoughts": 1
+    },
+    "Frank": {
+      "thoughts": 1
+    },
+    "Agent-1": {
+      "thoughts": 23
+    },
+    "Agent-2": {
+      "thoughts": 1
+    },
+    "Agent-3": {
+      "thoughts": 1
+    },
+    "OrgA-Node": {
+      "thoughts": 3
+    },
+    "OrgB-Node": {
+      "thoughts": 1
+    },
+    "OrgC-Node": {
+      "thoughts": 1
+    },
+    "PublicRelay": {
+      "thoughts": 24
+    },
+    "ArchiveNode": {
+      "thoughts": 23
+    },
+    "IndexNode": {
+      "thoughts": 23
+    }
+  },
+  "pools": {
+    "public_commons": "baf_0d942d9747c93aadf1c5354a9b191346",
+    "orga_internal": "baf_a89d80c52a9021141d1945f017d484ea",
+    "negotiation": "baf_5e34a2bded3073f9cf8f33da73f914f9",
+    "review": "baf_aab8452aa19728314b634ffa122c4bce",
+    "archive": "baf_3b7f715b375006ea0715eb39d8e7390c"
+  },
+  "attestations": {
+    "alice": "baf_15a92c0d837cce41913d35e3a638117e",
+    "agent": "baf_3c9b71cc5e79698e7d9ef4e0a5ef8674",
+    "bob": "baf_18845b642ccc7bb57e01e20e02d3a698",
+    "combined": "baf_c927d8f59fdd95ebe2cb20a9ff95db99"
+  }
+}

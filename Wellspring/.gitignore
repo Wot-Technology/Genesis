@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+.eggs/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# SQLite databases (local state, not source)
+*.db
+
+# Compiled protos (regenerate from .proto)
+*_pb2.py
+*_pb2_grpc.py
+
+# Secrets (never commit)
+*.env
+.env.*
+*credentials*
+*secret*
+
+# Large files
+*.bin
+*.pkl
+*.model
+
+# Logs
+*.log
+logs/
+
+# Jupyter
+.ipynb_checkpoints/

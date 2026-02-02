@@ -1,0 +1,377 @@
+{
+  "alice": [
+    {
+      "cid": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "type": "identity",
+      "content": {
+        "name": "Alice",
+        "pubkey": "c64c2bf57883e0c07f3e8a436ef65b1b3a6cacacadb023dc568982b990c481b8",
+        "endpoint": "http://localhost:8001"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.955946",
+      "signature": "JPNGamFnC2hnRapzHV+PoMltPrr+G/pUb1zbbdUBuepHZa4juJh+g5uqd/FN4HTfpqxeNyZrDaY9voKqk01SBg=="
+    },
+    {
+      "cid": "baf_9384a00dbf74f5443458413486c192f4",
+      "type": "message",
+      "content": {
+        "text": "Hello from Alice!",
+        "seq": 1
+      },
+      "created_by": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "because": [
+        "baf_72bb62d9896f7741b0de2f2feac8c88b"
+      ],
+      "created_at": "2026-01-30T15:50:02.023927",
+      "signature": "IlRVpHBwXPHuKBNCnpuq7sUT5Z72F4qkHZQCxezdcX0D1vwla3tDLOCNrZn1Od6B6xvYlg8gNfh9hpdafUyQCQ=="
+    },
+    {
+      "cid": "baf_d6e6d564e7aa0faeb3e47a427597faed",
+      "type": "message",
+      "content": {
+        "text": "Alice's second thought",
+        "seq": 2
+      },
+      "created_by": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "because": [
+        "baf_9384a00dbf74f5443458413486c192f4"
+      ],
+      "created_at": "2026-01-30T15:50:02.025159",
+      "signature": "ovfEuoFK4Ie+r7bFGNve25GExneTim3BHYkDE3s1H9A0IkA6CWDWQ8ebsSJq1fhiPGOA3Qe93TlmV+MjcrWHDQ=="
+    },
+    {
+      "cid": "baf_147a7c51dd95a5692253f4573a3eb6d3",
+      "type": "identity",
+      "content": {
+        "name": "Bob",
+        "pubkey": "f0d69c8e538e08c0de004c5d6addd9a9d30b9ef59879a63fa1db24c6fe5bc19b",
+        "endpoint": "http://localhost:8002"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.947817",
+      "signature": "UHBIq3LI65eKm2OJho8ZHFxrRETtq0sQ4XzeLgHquI0pocsZhk67Y+bopJs/TFzD/fmVoxtb4vVyGCCwb29LCw=="
+    },
+    {
+      "cid": "baf_29b68eb67f5993c058d450c6c611b60c",
+      "type": "message",
+      "content": {
+        "text": "Bob here!",
+        "seq": 1
+      },
+      "created_by": "baf_147a7c51dd95a5692253f4573a3eb6d3",
+      "because": [
+        "baf_147a7c51dd95a5692253f4573a3eb6d3"
+      ],
+      "created_at": "2026-01-30T15:50:02.027006",
+      "signature": "N+WZ57exjy983ieUjz4hwG6g0KrofumuHWu4m37Bej7rBdL8FRypzklyKzQ8E1jjo39caoYVv6hiGsP6hPvsBg=="
+    },
+    {
+      "cid": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "type": "identity",
+      "content": {
+        "name": "Carol",
+        "pubkey": "337e4f78a7daa37ad73b9e9d484680f2aa4f03f30b1d0598e6c17ae268dccf34",
+        "endpoint": "http://localhost:8003"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.959403",
+      "signature": "LCJcMuTS/ls12uXqhvZ6OVEnzi3wNVlTnxtOWF1Q5de18b86zYCUYnwg7qKm863sZuOIBVEmMsqaC4K3vegdDg=="
+    },
+    {
+      "cid": "baf_911923a1ebf89cdb479baf76fc46aab7",
+      "type": "message",
+      "content": {
+        "text": "Carol checking in",
+        "seq": 1
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_8219e431979e0d7cf160f2ae4905abfa"
+      ],
+      "created_at": "2026-01-30T15:50:02.028908",
+      "signature": "1vN5645rqARQWYK+pDBcoV9gahwE7BDtVXk5Y3hM59hrGpa2HxGsrQgD972sRb7j9oJGzuJ7hOpnfmBQDI2vBg=="
+    },
+    {
+      "cid": "baf_bea41291cba8ffe6b2caeabcbdf5c841",
+      "type": "message",
+      "content": {
+        "text": "Carol's analysis",
+        "seq": 2
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_911923a1ebf89cdb479baf76fc46aab7"
+      ],
+      "created_at": "2026-01-30T15:50:02.030267",
+      "signature": "rb5UpannHrvmU1WsUiyco/CY1EPO/LLC/Mm1UH+/DP98PkNjzKFJQI2YUXXyVmnOHt33V3XOFZndl0sHa0hnCQ=="
+    },
+    {
+      "cid": "baf_f9e81e940c28c64418cdfb6d428ebfe6",
+      "type": "message",
+      "content": {
+        "text": "Carol's conclusion",
+        "seq": 3
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_bea41291cba8ffe6b2caeabcbdf5c841"
+      ],
+      "created_at": "2026-01-30T15:50:02.031433",
+      "signature": "MZsczcPDprXNqfDRwfkkpsFd3g0IiUhz3G0bt2Bo9eS81CL82iiGsI/BJ1jJWerAZDrey8Nz1cC+mn6Jgs9ODg=="
+    }
+  ],
+  "bob": [
+    {
+      "cid": "baf_147a7c51dd95a5692253f4573a3eb6d3",
+      "type": "identity",
+      "content": {
+        "name": "Bob",
+        "pubkey": "f0d69c8e538e08c0de004c5d6addd9a9d30b9ef59879a63fa1db24c6fe5bc19b",
+        "endpoint": "http://localhost:8002"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.947817",
+      "signature": "UHBIq3LI65eKm2OJho8ZHFxrRETtq0sQ4XzeLgHquI0pocsZhk67Y+bopJs/TFzD/fmVoxtb4vVyGCCwb29LCw=="
+    },
+    {
+      "cid": "baf_29b68eb67f5993c058d450c6c611b60c",
+      "type": "message",
+      "content": {
+        "text": "Bob here!",
+        "seq": 1
+      },
+      "created_by": "baf_147a7c51dd95a5692253f4573a3eb6d3",
+      "because": [
+        "baf_147a7c51dd95a5692253f4573a3eb6d3"
+      ],
+      "created_at": "2026-01-30T15:50:02.027006",
+      "signature": "N+WZ57exjy983ieUjz4hwG6g0KrofumuHWu4m37Bej7rBdL8FRypzklyKzQ8E1jjo39caoYVv6hiGsP6hPvsBg=="
+    },
+    {
+      "cid": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "type": "identity",
+      "content": {
+        "name": "Alice",
+        "pubkey": "c64c2bf57883e0c07f3e8a436ef65b1b3a6cacacadb023dc568982b990c481b8",
+        "endpoint": "http://localhost:8001"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.955946",
+      "signature": "JPNGamFnC2hnRapzHV+PoMltPrr+G/pUb1zbbdUBuepHZa4juJh+g5uqd/FN4HTfpqxeNyZrDaY9voKqk01SBg=="
+    },
+    {
+      "cid": "baf_9384a00dbf74f5443458413486c192f4",
+      "type": "message",
+      "content": {
+        "text": "Hello from Alice!",
+        "seq": 1
+      },
+      "created_by": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "because": [
+        "baf_72bb62d9896f7741b0de2f2feac8c88b"
+      ],
+      "created_at": "2026-01-30T15:50:02.023927",
+      "signature": "IlRVpHBwXPHuKBNCnpuq7sUT5Z72F4qkHZQCxezdcX0D1vwla3tDLOCNrZn1Od6B6xvYlg8gNfh9hpdafUyQCQ=="
+    },
+    {
+      "cid": "baf_d6e6d564e7aa0faeb3e47a427597faed",
+      "type": "message",
+      "content": {
+        "text": "Alice's second thought",
+        "seq": 2
+      },
+      "created_by": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "because": [
+        "baf_9384a00dbf74f5443458413486c192f4"
+      ],
+      "created_at": "2026-01-30T15:50:02.025159",
+      "signature": "ovfEuoFK4Ie+r7bFGNve25GExneTim3BHYkDE3s1H9A0IkA6CWDWQ8ebsSJq1fhiPGOA3Qe93TlmV+MjcrWHDQ=="
+    },
+    {
+      "cid": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "type": "identity",
+      "content": {
+        "name": "Carol",
+        "pubkey": "337e4f78a7daa37ad73b9e9d484680f2aa4f03f30b1d0598e6c17ae268dccf34",
+        "endpoint": "http://localhost:8003"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.959403",
+      "signature": "LCJcMuTS/ls12uXqhvZ6OVEnzi3wNVlTnxtOWF1Q5de18b86zYCUYnwg7qKm863sZuOIBVEmMsqaC4K3vegdDg=="
+    },
+    {
+      "cid": "baf_911923a1ebf89cdb479baf76fc46aab7",
+      "type": "message",
+      "content": {
+        "text": "Carol checking in",
+        "seq": 1
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_8219e431979e0d7cf160f2ae4905abfa"
+      ],
+      "created_at": "2026-01-30T15:50:02.028908",
+      "signature": "1vN5645rqARQWYK+pDBcoV9gahwE7BDtVXk5Y3hM59hrGpa2HxGsrQgD972sRb7j9oJGzuJ7hOpnfmBQDI2vBg=="
+    },
+    {
+      "cid": "baf_bea41291cba8ffe6b2caeabcbdf5c841",
+      "type": "message",
+      "content": {
+        "text": "Carol's analysis",
+        "seq": 2
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_911923a1ebf89cdb479baf76fc46aab7"
+      ],
+      "created_at": "2026-01-30T15:50:02.030267",
+      "signature": "rb5UpannHrvmU1WsUiyco/CY1EPO/LLC/Mm1UH+/DP98PkNjzKFJQI2YUXXyVmnOHt33V3XOFZndl0sHa0hnCQ=="
+    },
+    {
+      "cid": "baf_f9e81e940c28c64418cdfb6d428ebfe6",
+      "type": "message",
+      "content": {
+        "text": "Carol's conclusion",
+        "seq": 3
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_bea41291cba8ffe6b2caeabcbdf5c841"
+      ],
+      "created_at": "2026-01-30T15:50:02.031433",
+      "signature": "MZsczcPDprXNqfDRwfkkpsFd3g0IiUhz3G0bt2Bo9eS81CL82iiGsI/BJ1jJWerAZDrey8Nz1cC+mn6Jgs9ODg=="
+    }
+  ],
+  "carol": [
+    {
+      "cid": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "type": "identity",
+      "content": {
+        "name": "Carol",
+        "pubkey": "337e4f78a7daa37ad73b9e9d484680f2aa4f03f30b1d0598e6c17ae268dccf34",
+        "endpoint": "http://localhost:8003"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.959403",
+      "signature": "LCJcMuTS/ls12uXqhvZ6OVEnzi3wNVlTnxtOWF1Q5de18b86zYCUYnwg7qKm863sZuOIBVEmMsqaC4K3vegdDg=="
+    },
+    {
+      "cid": "baf_911923a1ebf89cdb479baf76fc46aab7",
+      "type": "message",
+      "content": {
+        "text": "Carol checking in",
+        "seq": 1
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_8219e431979e0d7cf160f2ae4905abfa"
+      ],
+      "created_at": "2026-01-30T15:50:02.028908",
+      "signature": "1vN5645rqARQWYK+pDBcoV9gahwE7BDtVXk5Y3hM59hrGpa2HxGsrQgD972sRb7j9oJGzuJ7hOpnfmBQDI2vBg=="
+    },
+    {
+      "cid": "baf_bea41291cba8ffe6b2caeabcbdf5c841",
+      "type": "message",
+      "content": {
+        "text": "Carol's analysis",
+        "seq": 2
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_911923a1ebf89cdb479baf76fc46aab7"
+      ],
+      "created_at": "2026-01-30T15:50:02.030267",
+      "signature": "rb5UpannHrvmU1WsUiyco/CY1EPO/LLC/Mm1UH+/DP98PkNjzKFJQI2YUXXyVmnOHt33V3XOFZndl0sHa0hnCQ=="
+    },
+    {
+      "cid": "baf_f9e81e940c28c64418cdfb6d428ebfe6",
+      "type": "message",
+      "content": {
+        "text": "Carol's conclusion",
+        "seq": 3
+      },
+      "created_by": "baf_8219e431979e0d7cf160f2ae4905abfa",
+      "because": [
+        "baf_bea41291cba8ffe6b2caeabcbdf5c841"
+      ],
+      "created_at": "2026-01-30T15:50:02.031433",
+      "signature": "MZsczcPDprXNqfDRwfkkpsFd3g0IiUhz3G0bt2Bo9eS81CL82iiGsI/BJ1jJWerAZDrey8Nz1cC+mn6Jgs9ODg=="
+    },
+    {
+      "cid": "baf_147a7c51dd95a5692253f4573a3eb6d3",
+      "type": "identity",
+      "content": {
+        "name": "Bob",
+        "pubkey": "f0d69c8e538e08c0de004c5d6addd9a9d30b9ef59879a63fa1db24c6fe5bc19b",
+        "endpoint": "http://localhost:8002"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.947817",
+      "signature": "UHBIq3LI65eKm2OJho8ZHFxrRETtq0sQ4XzeLgHquI0pocsZhk67Y+bopJs/TFzD/fmVoxtb4vVyGCCwb29LCw=="
+    },
+    {
+      "cid": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "type": "identity",
+      "content": {
+        "name": "Alice",
+        "pubkey": "c64c2bf57883e0c07f3e8a436ef65b1b3a6cacacadb023dc568982b990c481b8",
+        "endpoint": "http://localhost:8001"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T15:50:01.955946",
+      "signature": "JPNGamFnC2hnRapzHV+PoMltPrr+G/pUb1zbbdUBuepHZa4juJh+g5uqd/FN4HTfpqxeNyZrDaY9voKqk01SBg=="
+    },
+    {
+      "cid": "baf_9384a00dbf74f5443458413486c192f4",
+      "type": "message",
+      "content": {
+        "text": "Hello from Alice!",
+        "seq": 1
+      },
+      "created_by": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "because": [
+        "baf_72bb62d9896f7741b0de2f2feac8c88b"
+      ],
+      "created_at": "2026-01-30T15:50:02.023927",
+      "signature": "IlRVpHBwXPHuKBNCnpuq7sUT5Z72F4qkHZQCxezdcX0D1vwla3tDLOCNrZn1Od6B6xvYlg8gNfh9hpdafUyQCQ=="
+    },
+    {
+      "cid": "baf_d6e6d564e7aa0faeb3e47a427597faed",
+      "type": "message",
+      "content": {
+        "text": "Alice's second thought",
+        "seq": 2
+      },
+      "created_by": "baf_72bb62d9896f7741b0de2f2feac8c88b",
+      "because": [
+        "baf_9384a00dbf74f5443458413486c192f4"
+      ],
+      "created_at": "2026-01-30T15:50:02.025159",
+      "signature": "ovfEuoFK4Ie+r7bFGNve25GExneTim3BHYkDE3s1H9A0IkA6CWDWQ8ebsSJq1fhiPGOA3Qe93TlmV+MjcrWHDQ=="
+    },
+    {
+      "cid": "baf_29b68eb67f5993c058d450c6c611b60c",
+      "type": "message",
+      "content": {
+        "text": "Bob here!",
+        "seq": 1
+      },
+      "created_by": "baf_147a7c51dd95a5692253f4573a3eb6d3",
+      "because": [
+        "baf_147a7c51dd95a5692253f4573a3eb6d3"
+      ],
+      "created_at": "2026-01-30T15:50:02.027006",
+      "signature": "N+WZ57exjy983ieUjz4hwG6g0KrofumuHWu4m37Bej7rBdL8FRypzklyKzQ8E1jjo39caoYVv6hiGsP6hPvsBg=="
+    }
+  ]
+}

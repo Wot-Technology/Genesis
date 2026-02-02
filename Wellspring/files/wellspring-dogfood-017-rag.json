@@ -1,0 +1,213 @@
+{
+  "pool": {
+    "cid": "baf_1fb1ae124a892e5e288ebc93bf80a937",
+    "type": "pool",
+    "content": {
+      "name": "Research Pool",
+      "admin": "baf_c5ace49da8bd8c33b7ca2ea557f68e55"
+    },
+    "created_by": "baf_c5ace49da8bd8c33b7ca2ea557f68e55",
+    "because": [
+      "baf_c5ace49da8bd8c33b7ca2ea557f68e55"
+    ],
+    "created_at": "2026-01-30T16:10:51.294481",
+    "signature": "62yLTnoWpB+MrWXZnNjobIepIJo8aO8HIAO0Pwzhh/vFYDbBN2omBvvlEKpkzBegSlkn8gsnD4fLdcODHzvlAw=="
+  },
+  "index_config": {
+    "cid": "baf_f258427cf5f00ffb1c7a2dc25756b6a5",
+    "type": "aspect",
+    "content": {
+      "aspect_type": "index_config",
+      "embedding_model": "tfidf",
+      "similarity_threshold": 0.05,
+      "max_candidates": 50,
+      "chunk_strategy": "whole_thought",
+      "index_scope": "pool"
+    },
+    "created_by": "baf_c5ace49da8bd8c33b7ca2ea557f68e55",
+    "because": [
+      "baf_1fb1ae124a892e5e288ebc93bf80a937"
+    ],
+    "created_at": "2026-01-30T16:10:51.294524",
+    "signature": "hF0tCutnQQYZmNeysaDk5Es/jkLlDJBTM5Q1Rj422cjrRcipLrnyBON5qZQwxhabWVeS/kkymJTakU0DRRB0CQ=="
+  },
+  "thoughts": [
+    {
+      "cid": "baf_c5ace49da8bd8c33b7ca2ea557f68e55",
+      "type": "identity",
+      "content": {
+        "name": "Dr. Sarah (Domain Expert)",
+        "pubkey": "38b00241c1197763c2862a4447be2d6da8177fed3f2fdbee057c10e400ff5909"
+      },
+      "created_by": "GENESIS",
+      "because": [],
+      "created_at": "2026-01-30T16:10:51.294019",
+      "signature": "QfPG21/BCoqrFSjn4eKOxrTKOQtVasdNTIAzwUtYse4WmiBfPFnTCIn35wgqe56shK4KxiUUu+6cdUsbT5TyCw=="
+    },
+    {
+      "cid": "baf_1fb1ae124a892e5e288ebc93bf80a937",
+      "type": "pool",
+      "content": {
+        "name": "Research Pool",
+        "admin": "baf_c5ace49da8bd8c33b7ca2ea557f68e55"
+      },
+      "created_by": "baf_c5ace49da8bd8c33b7ca2ea557f68e55",
+      "because": [
+        "baf_c5ace49da8bd8c33b7ca2ea557f68e55"
+      ],
+      "created_at": "2026-01-30T16:10:51.294481",
+      "signature": "62yLTnoWpB+MrWXZnNjobIepIJo8aO8HIAO0Pwzhh/vFYDbBN2omBvvlEKpkzBegSlkn8gsnD4fLdcODHzvlAw=="
+    },
+    {
+      "cid": "baf_f258427cf5f00ffb1c7a2dc25756b6a5",
+      "type": "aspect",
+      "content": {
+        "aspect_type": "index_config",
+        "embedding_model": "tfidf",
+        "similarity_threshold": 0.05,
+        "max_candidates": 50,
+        "chunk_strategy": "whole_thought",
+        "index_scope": "pool"
+      },
+      "created_by": "baf_c5ace49da8bd8c33b7ca2ea557f68e55",
+      "because": [
+        "baf_1fb1ae124a892e5e288ebc93bf80a937"
+      ],
+      "created_at": "2026-01-30T16:10:51.294524",
+      "signature": "hF0tCutnQQYZmNeysaDk5Es/jkLlDJBTM5Q1Rj422cjrRcipLrnyBON5qZQwxhabWVeS/kkymJTakU0DRRB0CQ=="
+    },
+    {
+      "cid": "baf_8be070cd6d923d49f8c230f46252e2c7",
+      "type": "research",
+      "content": {
+        "title": "Climate Impact Analysis",
+        "text": "Rising global temperatures are causing measurable changes in precipitation patterns, with drought conditions increasing in equatorial regions while flooding becomes more common in temperate zones."
+      },
+      "created_by": "baf_c5ace49da8bd8c33b7ca2ea557f68e55",
+      "because": [
+        "baf_c5ace49da8bd8c33b7ca2ea557f68e55"
+      ],
+      "created_at": "2026-01-30T16:10:51.294594",
+      "signature": "tFvOd/wW9+iCMb4kS0zlOMwXSVoNwVaxPKbS6tJ7tO5JE1uBzw7XVDGU7h4SUVclO3JXYrZWMGV0ueaASZm8Bw=="
+    },
+    {
+      "cid": "baf_b966a06cae8e56e4e07e750d964ec487",
+      "type": "research",
+      "content": {
+        "title": "Ocean Acidification Study",
+        "text": "Carbon dioxide absorption by oceans has increased acidity by 30% since pre-industrial times, threatening coral reef ecosystems and shellfish populations."
+      },
+      "created_by": "baf_22e2df35e593b756d6e491468982b2aa",
+      "because": [
+        "baf_8be070cd6d923d49f8c230f46252e2c7",
+        "baf_22e2df35e593b756d6e491468982b2aa"
+      ],
+      "created_at": "2026-01-30T16:10:51.294642",
+      "signature": "ZzZEnM6EzwNcL7HRVAM9vxvd5z75kzFEZE6eYrbLH/mmrmhdeW9Ni9YjusldIEm14TtR3XJ1nO68uxBrduASCQ=="
+    },
+    {
+      "cid": "baf_678f487d152a5657a6e6cddc9c9f5e4b",
+      "type": "article",
+      "content": {
+        "title": "Climate Crisis Deepens",
+        "text": "Scientists warn that climate change is accelerating faster than predicted, with record temperatures and extreme weather events becoming the new normal."
+      },
+      "created_by": "baf_7d475950f85f5b997ca36c4b4141f01d",
+      "because": [
+        "baf_7d475950f85f5b997ca36c4b4141f01d"
+      ],
+      "created_at": "2026-01-30T16:10:51.294687",
+      "signature": "g48ywiaZnTdkA4S6Mm0TNUmc2hAjnCnESYXBp755Gc3/F375+S1vphDoJGIF3aCXxvfE5DRUM3mUAL8qZTw6AA=="
+    },
+    {
+      "cid": "baf_fc1e721f2c34ac7db4d1ae71e375ca9b",
+      "type": "research",
+      "content": {
+        "title": "Transformer Architecture Analysis",
+        "text": "Attention mechanisms in transformer models enable parallel processing of sequence data, significantly improving training efficiency compared to recurrent architectures."
+      },
+      "created_by": "baf_c5ace49da8bd8c33b7ca2ea557f68e55",
+      "because": [
+        "baf_c5ace49da8bd8c33b7ca2ea557f68e55"
+      ],
+      "created_at": "2026-01-30T16:10:51.294731",
+      "signature": "jYak/DBGHZCjEX05taQVaj49egRJ7VlmKGPxFVC8i/1wpht2BkZuKu50qdIvVITBAoKsNJ5x7ati2ML3VhHfCg=="
+    },
+    {
+      "cid": "baf_e7054a82d03e2c59beb2d1797651a212",
+      "type": "note",
+      "content": {
+        "text": "The key insight is that self-attention allows each token to directly attend to all other tokens, bypassing the sequential bottleneck of RNNs and LSTMs."
+      },
+      "created_by": "baf_22e2df35e593b756d6e491468982b2aa",
+      "because": [
+        "baf_fc1e721f2c34ac7db4d1ae71e375ca9b",
+        "baf_22e2df35e593b756d6e491468982b2aa"
+      ],
+      "created_at": "2026-01-30T16:10:51.294775",
+      "signature": "DMB50Ee8Xs2V4s/CGiJK0RxPs1Z2cICWU552v/3MJ1kboclqXxoDQV78kioA5+AGk73B3j1ibW+0mY42FtxACg=="
+    },
+    {
+      "cid": "baf_f476ea78cf4bca18b641499b39b85b76",
+      "type": "message",
+      "content": {
+        "text": "ChatGPT is amazing! AI is going to change everything! Neural networks are the future of computing and will solve all our problems!"
+      },
+      "created_by": "baf_0ea9fb675aa022f4ec6a677f7677a6dc",
+      "because": [
+        "baf_0ea9fb675aa022f4ec6a677f7677a6dc"
+      ],
+      "created_at": "2026-01-30T16:10:51.294820",
+      "signature": "5v+TTI9IABN9LJyeQFgkDehA4TJ8XIAPCUH6VpphvMmLXNg1Qs5ifKGiDwMbdpD/Iu4xapY1PAIn++dNfTzpDA=="
+    },
+    {
+      "cid": "baf_c8be0e54af0ecf1847faaa15262ffa9a",
+      "type": "research",
+      "content": {
+        "title": "Monetary Policy Effects",
+        "text": "Interest rate adjustments by central banks have delayed effects on inflation, typically requiring 12-18 months to fully manifest in consumer price indices."
+      },
+      "created_by": "baf_22e2df35e593b756d6e491468982b2aa",
+      "because": [
+        "baf_22e2df35e593b756d6e491468982b2aa"
+      ],
+      "created_at": "2026-01-30T16:10:51.294878",
+      "signature": "+uWWWdJmTXbxkRXKv0EGId2t2foZBW0MIxTz56XW/rjSE0itcFYL4kBXVIH8At9ZcorMgtbM02T1d46H4nmMBQ=="
+    },
+    {
+      "cid": "baf_4f70e7e2f403f4c49964cfbe71d4d76c",
+      "type": "research",
+      "content": {
+        "title": "Climate Economics Integration",
+        "text": "Machine learning models can improve climate impact predictions for economic planning, combining atmospheric data with economic indicators to forecast regional effects."
+      },
+      "created_by": "baf_c5ace49da8bd8c33b7ca2ea557f68e55",
+      "because": [
+        "baf_8be070cd6d923d49f8c230f46252e2c7",
+        "baf_fc1e721f2c34ac7db4d1ae71e375ca9b",
+        "baf_c5ace49da8bd8c33b7ca2ea557f68e55"
+      ],
+      "created_at": "2026-01-30T16:10:51.294923",
+      "signature": "SgPrIztJmq5Y858PJKbRwCHxMoAggoTBhflHCrQOBs5qx1cjXYU8IWs5c7uiT6JcPRMS3xvrMcLX5rphDP5EBQ=="
+    },
+    {
+      "cid": "baf_2461eedb19bf692bb63d2925367861bb",
+      "type": "message",
+      "content": {
+        "text": "Just had the best pizza ever! \ud83c\udf55 The cheese was perfectly melted and the crust was crispy."
+      },
+      "created_by": "baf_0ea9fb675aa022f4ec6a677f7677a6dc",
+      "because": [
+        "baf_0ea9fb675aa022f4ec6a677f7677a6dc"
+      ],
+      "created_at": "2026-01-30T16:10:51.294968",
+      "signature": "sM6O7FnkLLuUGMNQGGfddPoZC5d0+fh6OfYyypZJIQgNj/lakJ/lEBxIinMOqEV7CD4CHs0CsV++Kl4s9Lo6CQ=="
+    }
+  ],
+  "trust_scores": {
+    "baf_c5ace49da8bd8c33b7ca2ea557f68e55": 1.0,
+    "baf_22e2df35e593b756d6e491468982b2aa": 0.8,
+    "baf_7d475950f85f5b997ca36c4b4141f01d": 0.5,
+    "baf_0ea9fb675aa022f4ec6a677f7677a6dc": 0.2
+  }
+}

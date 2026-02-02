@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go San — 碁三</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Serif+JP:wght@400;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            --board-color: #d4a556;
+            --board-dark: #b8934a;
+            --line-color: #2a1810;
+            --void-color: #1a0a05;
+            --void-glow: #ff3300;
+            --black-stone: #0a0a0a;
+            --white-stone: #f5f5f0;
+            --bg: #0d0d0d;
+            --text: #e8e8e8;
+            --accent: #ff6b35;
+        }
+        
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            background-image: 
+                radial-gradient(ellipse at 20% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 51, 0, 0.03) 0%, transparent 50%);
+        }
+        
+        h1 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: #666;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+        
+        .game-container {
+            display: flex;
+            gap: 3rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .board-wrapper {
+            position: relative;
+        }
+        
+        .board {
+            display: grid;
+            grid-template-columns: repeat(9, 48px);
+            grid-template-rows: repeat(9, 48px);
+            background: var(--board-color);
+            padding: 24px;
+            border-radius: 4px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        /* Grid lines - drawn so intersections are at cell centers */
+        .board::before {
+            content: '';
+            position: absolute;
+            top: 48px;  /* 24px padding + 24px to center of first cell */
+            left: 48px;
+            right: 48px;
+            bottom: 48px;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(var(--line-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line-color) 1px, transparent 1px);
+            background-size: 48px 48px;
+            background-position: 0 0;
+        }
+        
+        /* Edge lines */
+        .board::after {
+            content: '';
+            position: absolute;
+            top: 48px;
+            left: 48px;
+            right: 48px;
+            bottom: 48px;
+            border: 1px solid var(--line-color);
+            pointer-events: none;
+        }
+        
+        .intersection {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .intersection:hover::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            pointer-events: none;
+        }
+        
+        .intersection.void-mode:hover::after {
+            background: rgba(255, 51, 0, 0.3);
+            border-radius: 2px;
+        }
+        
+        .stone {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            position: relative;
+            transition: transform 0.1s ease;
+        }
+        
+        .stone.black {
+            background: radial-gradient(ellipse at 30% 30%, #3a3a3a, var(--black-stone) 60%);
+            box-shadow: 
+                2px 3px 6px rgba(0, 0, 0, 0.4),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.05);
+        }
+        
+        .stone.white {
+            background: radial-gradient(ellipse at 30% 30%, #ffffff, var(--white-stone) 60%);
+            box-shadow: 
+                2px 3px 6px rgba(0, 0, 0, 0.3),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stone.last-move::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+        
+        .void-marker {
+            width: 44px;
+            height: 44px;
+            background: var(--void-color);
+            position: relative;
+            animation: void-pulse 2s ease-in-out infinite;
+        }
+        
+        .void-marker::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--void-glow), transparent, var(--void-glow));
+            opacity: 0.6;
+            z-index: -1;
+        }
+        
+        .void-pointer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 14px solid var(--void-glow);
+            transform-origin: center center;
+            filter: drop-shadow(0 0 4px var(--void-glow));
+        }
+        
+        .void-marker.contained {
+            animation: none;
+            opacity: 0.6;
+            box-shadow: 0 0 5px var(--void-glow), inset 0 0 5px rgba(255, 51, 0, 0.2);
+        }
+        
+        .void-marker.contained::after {
+            content: '▪';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--void-glow);
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+        
+        .void-marker.origin {
+            border: 2px solid var(--void-glow);
+        }
+        
+        @keyframes void-pulse {
+            0%, 100% { box-shadow: 0 0 10px var(--void-glow), inset 0 0 10px rgba(255, 51, 0, 0.3); }
+            50% { box-shadow: 0 0 20px var(--void-glow), inset 0 0 15px rgba(255, 51, 0, 0.5); }
+        }
+        
+        .star-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--line-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .panel {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 1.5rem;
+            min-width: 220px;
+        }
+        
+        .panel h2 {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+        }
+        
+        .turn-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .turn-stone {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+        
+        .turn-stone.black {
+            background: radial-gradient(ellipse at 30% 30%, #3a3a3a, var(--black-stone) 60%);
+        }
+        
+        .turn-stone.white {
+            background: radial-gradient(ellipse at 30% 30%, #ffffff, var(--white-stone) 60%);
+        }
+        
+        .turn-text {
+            font-size: 0.85rem;
+        }
+        
+        .scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .score-box {
+            text-align: center;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        
+        .score-label {
+            font-size: 0.65rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        button {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            padding: 0.75rem 1rem;
+            border: 1px solid #444;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+        }
+        
+        button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+        
+        button.pass {
+            border-color: #666;
+        }
+        
+        .mode-toggle {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .mode-toggle button {
+            flex: 1;
+            border-radius: 0;
+        }
+        
+        .mode-toggle button:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .mode-toggle button:last-child {
+            border-radius: 0 4px 4px 0;
+            border-left: none;
+        }
+        
+        .rules {
+            margin-top: 2rem;
+            max-width: 600px;
+            text-align: left;
+        }
+        
+        .rules h3 {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        
+        .rules p {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+        
+        .rules strong {
+            color: var(--text);
+        }
+        
+        .message {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .message.show {
+            opacity: 1;
+        }
+        
+        .captured-display {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+        
+        .captured-stones {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .captured-stone {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        
+        .captured-stone.black {
+            background: var(--black-stone);
+        }
+        
+        .captured-stone.white {
+            background: var(--white-stone);
+        }
+        
+        .void-count {
+            font-size: 0.75rem;
+            color: var(--void-glow);
+            margin-top: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>碁三</h1>
+    <p class="subtitle">Go San — Sōgo</p>
+    
+    <div class="game-container">
+        <div class="board-wrapper">
+            <div class="board" id="board"></div>
+        </div>
+        
+        <div class="panel">
+            <h2>Game State</h2>
+            
+            <div class="turn-indicator">
+                <div class="turn-stone" id="turnStone"></div>
+                <span class="turn-text" id="turnText">Black to play</span>
+            </div>
+            
+            <div class="mode-toggle">
+                <button id="stoneMode" class="active">Stone</button>
+                <button id="voidMode">Invert</button>
+            </div>
+            
+            <div class="scores">
+                <div class="score-box">
+                    <div class="score-label">Black</div>
+                    <div class="score-value" id="blackScore">0</div>
+                    <div class="captured-display">
+                        <span class="score-label">cap:</span>
+                        <span id="blackCaptured">0</span>
+                    </div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">White</div>
+                    <div class="score-value" id="whiteScore">0</div>
+                    <div class="captured-display">
+                        <span class="score-label">cap:</span>
+                        <span id="whiteCaptured">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="void-count" id="voidCount">Void points: 0</div>
+            
+            <div class="controls">
+                <button class="pass" id="passBtn">Pass</button>
+                <button id="undoBtn">Undo</button>
+                <button id="resetBtn">New Game</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="rules">
+        <h3>Go San — It Takes Two</h3>
+        <p><strong>Standard Go rules apply</strong> — surround to capture, ko rule active.</p>
+        <p><strong>Void Inversion:</strong> Click your own stone to invert it to void. This becomes the void origin (marked with border).</p>
+        <p><strong>3×3 Limit:</strong> Voids only spread within the 3×3 area around their origin. Max 9 squares per void cluster. Scorched earth, not plague.</p>
+        <p><strong>Tick Spread:</strong> Each turn, void pointer advances clockwise. If that direction is empty and within bounds, it spreads. Predictable.</p>
+        <p><strong>Sōgo:</strong> Mutual responsibility. You both feed it, you both suffer. It takes two.</p>
+    </div>
+    
+    <div class="message" id="message"></div>
+
+    <script>
+        const EMPTY = 0;
+        const BLACK = 1;
+        const WHITE = 2;
+        const VOID = 3;
+        
+        // 8 directions clockwise from North
+        const DIRECTIONS = [
+            [-1, 0],  // N
+            [-1, 1],  // NE
+            [0, 1],   // E
+            [1, 1],   // SE
+            [1, 0],   // S
+            [1, -1],  // SW
+            [0, -1],  // W
+            [-1, -1]  // NW
+        ];
+        const DIR_NAMES = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+        
+        let board = [];
+        let voidData = {}; // key: "row,col" -> { pointer: 0-7, originRow, originCol }
+        let currentPlayer = BLACK;
+        let mode = 'stone'; // 'stone' or 'void'
+        let captures = { [BLACK]: 0, [WHITE]: 0 };
+        let history = [];
+        let lastMove = null;
+        let koPoint = null;
+        let consecutivePasses = 0;
+        let gameEnded = false;
+        
+        const starPoints = [
+            [2, 2], [2, 6], [6, 2], [6, 6], [4, 4]
+        ];
+        
+        function init() {
+            board = Array(9).fill(null).map(() => Array(9).fill(EMPTY));
+            voidData = {};
+            currentPlayer = BLACK;
+            captures = { [BLACK]: 0, [WHITE]: 0 };
+            history = [];
+            lastMove = null;
+            koPoint = null;
+            consecutivePasses = 0;
+            gameEnded = false;
+            render();
+        }
+        
+        function render() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+            
+            // Add star points at intersections
+            starPoints.forEach(([row, col]) => {
+                const star = document.createElement('div');
+                star.className = 'star-point';
+                star.style.left = `${48 + col * 48}px`;  // 24px padding + 24px to cell center
+                star.style.top = `${48 + row * 48}px`;
+                star.style.transform = 'translate(-50%, -50%)';
+                boardEl.appendChild(star);
+            });
+            
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'intersection';
+                    if (mode === 'void') cell.classList.add('void-mode');
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    
+                    const state = board[row][col];
+                    if (state === BLACK || state === WHITE) {
+                        const stone = document.createElement('div');
+                        stone.className = `stone ${state === BLACK ? 'black' : 'white'}`;
+                        if (lastMove && lastMove.row === row && lastMove.col === col) {
+                            stone.classList.add('last-move');
+                        }
+                        cell.appendChild(stone);
+                    } else if (state === VOID) {
+                        const voidMarker = document.createElement('div');
+                        voidMarker.className = 'void-marker';
+                        
+                        const data = voidData[`${row},${col}`];
+                        if (data) {
+                            const { pointer, originRow, originCol } = data;
+                            
+                            // Check if this void can still spread anywhere in its 3x3
+                            let canSpread = false;
+                            for (let i = 0; i < 8; i++) {
+                                const [dr, dc] = DIRECTIONS[i];
+                                const nr = row + dr;
+                                const nc = col + dc;
+                                if (canVoidSpreadTo(nr, nc, originRow, originCol)) {
+                                    canSpread = true;
+                                    break;
+                                }
+                            }
+                            
+                            if (canSpread) {
+                                // Show current pointer direction
+                                const arrow = document.createElement('div');
+                                arrow.className = 'void-pointer';
+                                const rotation = pointer * 45;
+                                arrow.style.transform = `translate(-50%, -100%) rotate(${rotation}deg)`;
+                                arrow.title = `Pointing ${DIR_NAMES[pointer]}`;
+                                voidMarker.appendChild(arrow);
+                            } else {
+                                voidMarker.classList.add('contained');
+                            }
+                            
+                            // Mark origin void differently
+                            if (row === originRow && col === originCol) {
+                                voidMarker.classList.add('origin');
+                            }
+                        }
+                        
+                        cell.appendChild(voidMarker);
+                    }
+                    
+                    cell.addEventListener('click', () => handleClick(row, col));
+                    boardEl.appendChild(cell);
+                }
+            }
+            
+            // Update UI
+            document.getElementById('turnStone').className = `turn-stone ${currentPlayer === BLACK ? 'black' : 'white'}`;
+            document.getElementById('turnText').textContent = `${currentPlayer === BLACK ? 'Black' : 'White'} to play`;
+            document.getElementById('blackCaptured').textContent = captures[BLACK];
+            document.getElementById('whiteCaptured').textContent = captures[WHITE];
+            
+            // Count voids
+            let voidCount = 0;
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (board[r][c] === VOID) voidCount++;
+                }
+            }
+            document.getElementById('voidCount').textContent = `Void points: ${voidCount}`;
+            
+            updateScores();
+        }
+        
+        function handleClick(row, col) {
+            if (gameEnded) {
+                showMessage('Game ended — start new game');
+                return;
+            }
+            if (mode === 'void') {
+                placeVoid(row, col);
+            } else {
+                if (board[row][col] !== EMPTY) {
+                    showMessage('Position occupied');
+                    return;
+                }
+                placeStone(row, col);
+            }
+        }
+        
+        function placeVoid(row, col) {
+            // Can only convert your own stone to void
+            if (board[row][col] !== currentPlayer) {
+                if (board[row][col] === EMPTY) {
+                    showMessage('Must convert your own stone');
+                } else if (board[row][col] === VOID) {
+                    showMessage('Already void');
+                } else {
+                    showMessage("Can't convert opponent's stone");
+                }
+                return;
+            }
+            
+            // Save state for undo
+            saveState();
+            
+            board[row][col] = VOID;
+            // Origin voids track themselves as origin, pointer starts North
+            voidData[`${row},${col}`] = { 
+                pointer: 0, 
+                originRow: row, 
+                originCol: col 
+            };
+            lastMove = { row, col, type: 'void' };
+            consecutivePasses = 0;
+            
+            // Check for cascading captures after void placement
+            const cascadeCaptures = checkCascadeCaptures();
+            
+            currentPlayer = currentPlayer === BLACK ? WHITE : BLACK;
+            koPoint = null;
+            
+            // Spread voids at end of turn
+            const spreadCount = spreadVoids();
+            
+            render();
+            
+            let messages = ['Stone inverted'];
+            if (cascadeCaptures > 0) messages.push(`${cascadeCaptures} captured`);
+            if (spreadCount > 0) messages.push(`${spreadCount} spread`);
+            showMessage(messages.join(', '));
+        }
+        
+        function isWithinOrigin(row, col, originRow, originCol) {
+            // Check if position is within the 3x3 centered on origin
+            return Math.abs(row - originRow) <= 1 && Math.abs(col - originCol) <= 1;
+        }
+        
+        function canVoidSpreadTo(row, col, originRow, originCol) {
+            // Check if position is on board
+            if (row < 0 || row > 8 || col < 0 || col > 8) return false;
+            
+            // Must be empty
+            if (board[row][col] !== EMPTY) return false;
+            
+            // Must be within origin's 3x3
+            if (!isWithinOrigin(row, col, originRow, originCol)) return false;
+            
+            return true;
+        }
+        
+        function spreadVoids() {
+            let spreadCount = 0;
+            const newVoids = [];
+            
+            // Process each void
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (board[r][c] === VOID) {
+                        const key = `${r},${c}`;
+                        const data = voidData[key];
+                        if (!data) continue;
+                        
+                        const { pointer, originRow, originCol } = data;
+                        const [dr, dc] = DIRECTIONS[pointer];
+                        const nr = r + dr;
+                        const nc = c + dc;
+                        
+                        // Try to spread in current pointer direction
+                        if (canVoidSpreadTo(nr, nc, originRow, originCol)) {
+                            newVoids.push({ 
+                                row: nr, 
+                                col: nc, 
+                                originRow, 
+                                originCol 
+                            });
+                            spreadCount++;
+                        }
+                        
+                        // Advance pointer regardless
+                        voidData[key].pointer = (pointer + 1) % 8;
+                    }
+                }
+            }
+            
+            // Apply new voids (inherit origin from parent)
+            newVoids.forEach(({ row, col, originRow, originCol }) => {
+                board[row][col] = VOID;
+                voidData[`${row},${col}`] = { 
+                    pointer: 0, 
+                    originRow, 
+                    originCol 
+                };
+            });
+            
+            // Check for captures caused by void spread
+            if (spreadCount > 0) {
+                checkCascadeCaptures();
+            }
+            
+            return spreadCount;
+        }
+        
+        function placeStone(row, col) {
+            // Check ko
+            if (koPoint && koPoint.row === row && koPoint.col === col) {
+                showMessage('Ko violation');
+                return;
+            }
+            
+            // Save state for undo
+            saveState();
+            
+            board[row][col] = currentPlayer;
+            
+            // Check for captures
+            const opponent = currentPlayer === BLACK ? WHITE : BLACK;
+            let captured = [];
+            
+            getNeighbors(row, col).forEach(([nr, nc]) => {
+                if (board[nr][nc] === opponent) {
+                    const group = getGroup(nr, nc);
+                    if (getLiberties(group).length === 0) {
+                        captured = captured.concat(group);
+                    }
+                }
+            });
+            
+            // Check self-capture (suicide)
+            if (captured.length === 0) {
+                const selfGroup = getGroup(row, col);
+                if (getLiberties(selfGroup).length === 0) {
+                    board[row][col] = EMPTY;
+                    history.pop(); // Remove saved state
+                    showMessage('Suicide not allowed');
+                    return;
+                }
+            }
+            
+            // Remove captured stones
+            captured.forEach(([cr, cc]) => {
+                board[cr][cc] = EMPTY;
+                captures[currentPlayer]++;
+            });
+            
+            // Set ko point if single capture
+            if (captured.length === 1) {
+                const selfGroup = getGroup(row, col);
+                if (selfGroup.length === 1 && getLiberties(selfGroup).length === 1) {
+                    koPoint = { row: captured[0][0], col: captured[0][1] };
+                } else {
+                    koPoint = null;
+                }
+            } else {
+                koPoint = null;
+            }
+            
+            // Check cascade captures (groups now have fewer liberties due to new stone)
+            const cascadeCaptures = checkCascadeCaptures();
+            
+            lastMove = { row, col, type: 'stone' };
+            consecutivePasses = 0;
+            currentPlayer = currentPlayer === BLACK ? WHITE : BLACK;
+            
+            // Spread voids at end of turn
+            const spreadCount = spreadVoids();
+            
+            render();
+            
+            let messages = [];
+            if (captured.length > 0) messages.push(`${captured.length} captured`);
+            if (cascadeCaptures > 0) messages.push(`${cascadeCaptures} cascade`);
+            if (spreadCount > 0) messages.push(`${spreadCount} void spread`);
+            if (messages.length > 0) {
+                showMessage(messages.join(', '));
+            }
+        }
+        
+        function checkCascadeCaptures() {
+            let totalCaptured = 0;
+            let changed = true;
+            
+            while (changed) {
+                changed = false;
+                for (let r = 0; r < 9; r++) {
+                    for (let c = 0; c < 9; c++) {
+                        if (board[r][c] === BLACK || board[r][c] === WHITE) {
+                            const group = getGroup(r, c);
+                            if (getLiberties(group).length === 0) {
+                                const color = board[r][c];
+                                const capturer = color === BLACK ? WHITE : BLACK;
+                                group.forEach(([gr, gc]) => {
+                                    board[gr][gc] = EMPTY;
+                                    captures[capturer]++;
+                                    totalCaptured++;
+                                });
+                                changed = true;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return totalCaptured;
+        }
+        
+        function getNeighbors(row, col) {
+            const neighbors = [];
+            if (row > 0) neighbors.push([row - 1, col]);
+            if (row < 8) neighbors.push([row + 1, col]);
+            if (col > 0) neighbors.push([row, col - 1]);
+            if (col < 8) neighbors.push([row, col + 1]);
+            return neighbors;
+        }
+        
+        function getGroup(row, col) {
+            const color = board[row][col];
+            if (color === EMPTY || color === VOID) return [];
+            
+            const group = [];
+            const visited = new Set();
+            const stack = [[row, col]];
+            
+            while (stack.length > 0) {
+                const [r, c] = stack.pop();
+                const key = `${r},${c}`;
+                
+                if (visited.has(key)) continue;
+                if (board[r][c] !== color) continue;
+                
+                visited.add(key);
+                group.push([r, c]);
+                
+                getNeighbors(r, c).forEach(([nr, nc]) => {
+                    if (!visited.has(`${nr},${nc}`)) {
+                        stack.push([nr, nc]);
+                    }
+                });
+            }
+            
+            return group;
+        }
+        
+        function getLiberties(group) {
+            const liberties = new Set();
+            
+            group.forEach(([r, c]) => {
+                getNeighbors(r, c).forEach(([nr, nc]) => {
+                    if (board[nr][nc] === EMPTY) {
+                        liberties.add(`${nr},${nc}`);
+                    }
+                    // VOID blocks liberties - it's not a liberty
+                });
+            });
+            
+            return Array.from(liberties);
+        }
+        
+        function saveState() {
+            history.push({
+                board: board.map(row => [...row]),
+                voidData: JSON.parse(JSON.stringify(voidData)),
+                currentPlayer,
+                captures: { ...captures },
+                lastMove,
+                koPoint
+            });
+        }
+        
+        function undo() {
+            if (history.length === 0) {
+                showMessage('Nothing to undo');
+                return;
+            }
+            
+            const state = history.pop();
+            board = state.board;
+            voidData = state.voidData;
+            currentPlayer = state.currentPlayer;
+            captures = state.captures;
+            lastMove = state.lastMove;
+            koPoint = state.koPoint;
+            consecutivePasses = 0;
+            
+            render();
+        }
+        
+        function pass() {
+            if (gameEnded) {
+                showMessage('Game ended — start new game');
+                return;
+            }
+            saveState();
+            consecutivePasses++;
+            lastMove = null;
+            currentPlayer = currentPlayer === BLACK ? WHITE : BLACK;
+            koPoint = null;
+            
+            // Spread voids even on pass
+            const spreadCount = spreadVoids();
+            
+            if (consecutivePasses >= 2) {
+                endGame();
+            } else {
+                render();
+                let msg = `${currentPlayer === BLACK ? 'White' : 'Black'} passed`;
+                if (spreadCount > 0) msg += `, ${spreadCount} void spread`;
+                showMessage(msg);
+            }
+        }
+        
+        function endGame() {
+            gameEnded = true;
+            updateScores();
+            render();
+            const blackScore = parseInt(document.getElementById('blackScore').textContent);
+            const whiteScore = parseInt(document.getElementById('whiteScore').textContent);
+            
+            let result;
+            if (blackScore > whiteScore) {
+                result = `Black wins by ${blackScore - whiteScore} points`;
+            } else if (whiteScore > blackScore) {
+                result = `White wins by ${whiteScore - blackScore} points`;
+            } else {
+                result = 'Draw';
+            }
+            
+            showMessage(`Game Over! ${result}`);
+        }
+        
+        function updateScores() {
+            // Simple territory counting (empty points surrounded by one color)
+            let blackTerritory = 0;
+            let whiteTerritory = 0;
+            
+            const visited = new Set();
+            
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (board[r][c] === EMPTY && !visited.has(`${r},${c}`)) {
+                        const { territory, owner } = floodFillTerritory(r, c, visited);
+                        if (owner === BLACK) {
+                            blackTerritory += territory;
+                        } else if (owner === WHITE) {
+                            whiteTerritory += territory;
+                        }
+                    }
+                }
+            }
+            
+            // Add captures + territory
+            document.getElementById('blackScore').textContent = blackTerritory + captures[BLACK];
+            document.getElementById('whiteScore').textContent = whiteTerritory + captures[WHITE] + 6.5; // Komi
+        }
+        
+        function floodFillTerritory(startRow, startCol, visited) {
+            const territory = [];
+            const borders = new Set();
+            const stack = [[startRow, startCol]];
+            
+            while (stack.length > 0) {
+                const [r, c] = stack.pop();
+                const key = `${r},${c}`;
+                
+                if (visited.has(key)) continue;
+                
+                if (board[r][c] === EMPTY) {
+                    visited.add(key);
+                    territory.push([r, c]);
+                    
+                    getNeighbors(r, c).forEach(([nr, nc]) => {
+                        stack.push([nr, nc]);
+                    });
+                } else if (board[r][c] === BLACK || board[r][c] === WHITE) {
+                    borders.add(board[r][c]);
+                }
+                // VOID doesn't count as a border - territory is void-bounded
+            }
+            
+            let owner = null;
+            if (borders.size === 1) {
+                owner = borders.values().next().value;
+            }
+            
+            return { territory: territory.length, owner };
+        }
+        
+        function showMessage(text) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 2000);
+        }
+        
+        function setMode(newMode) {
+            mode = newMode;
+            document.getElementById('stoneMode').classList.toggle('active', mode === 'stone');
+            document.getElementById('voidMode').classList.toggle('active', mode === 'void');
+            render();
+        }
+        
+        // Event listeners
+        document.getElementById('stoneMode').addEventListener('click', () => setMode('stone'));
+        document.getElementById('voidMode').addEventListener('click', () => setMode('void'));
+        document.getElementById('passBtn').addEventListener('click', pass);
+        document.getElementById('undoBtn').addEventListener('click', undo);
+        document.getElementById('resetBtn').addEventListener('click', init);
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'v') setMode('void');
+            if (e.key === 's') setMode('stone');
+            if (e.key === 'p') pass();
+            if (e.key === 'u' || (e.ctrlKey && e.key === 'z')) undo();
+        });
+        
+        // Initialize
+        init();
+    </script>
+</body>
+</html>

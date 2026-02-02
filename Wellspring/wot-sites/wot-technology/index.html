@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WoT Technology — Protocol Specification</title>
+  <meta name="description" content="WoT Protocol: One primitive, content-addressed thoughts, BLAKE3 hashing, ed25519 signatures. Build on the Web of Thoughts.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WoT Technology — Protocol Specification">
+  <meta property="og:description" content="Technical documentation for the Web of Thoughts protocol. Schemas, wire format, identity collapse, peering.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wot.technology">
+
+  <link rel="stylesheet" href="../shared/design-system.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+  <style>
+    /* Page-specific styles */
+    .tech-hero {
+      padding-top: var(--space-32);
+      padding-bottom: var(--space-12);
+    }
+
+    .spec-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      background: rgba(255, 204, 0, 0.1);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .toc {
+      position: sticky;
+      top: 88px;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .toc__title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .toc__list {
+      list-style: none;
+    }
+
+    .toc__link {
+      display: block;
+      padding: var(--space-2) 0;
+      color: var(--color-text-dim);
+      font-size: var(--text-sm);
+      border-left: 2px solid transparent;
+      padding-left: var(--space-3);
+      transition: all var(--transition-fast);
+    }
+
+    .toc__link:hover {
+      color: var(--color-text);
+      border-left-color: var(--color-primary);
+    }
+
+    .doc-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--space-8);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .doc-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: static;
+        margin-bottom: var(--space-6);
+      }
+    }
+
+    .doc-section {
+      margin-bottom: var(--space-16);
+      scroll-margin-top: 100px;
+    }
+
+    .doc-section h2 {
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .doc-section h3 {
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+    }
+
+    .code-block {
+      position: relative;
+    }
+
+    .code-block__label {
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .tech-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+      margin: var(--space-4) 0;
+    }
+
+    .tech-table th,
+    .tech-table td {
+      padding: var(--space-3);
+      text-align: left;
+      border: 1px solid var(--color-border);
+    }
+
+    .tech-table th {
+      background: var(--color-bg-elevated);
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    .tech-table td:first-child {
+      font-family: var(--font-mono);
+      color: var(--color-primary);
+    }
+
+    .stack-diagram {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .stack-diagram .layer {
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--color-border);
+      margin-bottom: var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    .stack-diagram .layer:nth-child(odd) {
+      background: var(--color-bg-card);
+    }
+
+    .identity-collapse {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-2) var(--space-4);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      padding: var(--space-4);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-md);
+    }
+
+    .identity-collapse dt {
+      color: var(--color-primary);
+    }
+
+    .identity-collapse dd {
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container nav__inner">
+      <a href="/" class="nav__logo">
+        <svg viewBox="0 0 600 600" width="36" height="36">
+          <defs>
+            <linearGradient id="logo-gradient" x1="87.97" y1="87.97" x2="512.03" y2="512.03" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#fc0"/>
+              <stop offset="1" stop-color="#f7931e"/>
+            </linearGradient>
+          </defs>
+          <path d="M300,0C134.58,0,0,134.58,0,300S134.58,600,300,600,600,465.42,600,300,465.42,0,300,0ZM261.21,457.33h0a25.85,25.85,0,0,1-44,0L125.06,307.61a25.85,25.85,0,0,1,22-39.39h.09a25.86,25.86,0,0,1,22,12.31l92,149.73A25.86,25.86,0,0,1,261.21,457.33Zm38.67-79-22.07-35.91a25.86,25.86,0,0,1,0-27.07l47.41-77.14c13-21.23,14.45-31.13,14.45-34.4,0-20.19-18.15-37.25-39.65-37.25-16.1,0-30.33,9.57-36.45,22.86A25.38,25.38,0,0,1,240.4,203.8H240a25.86,25.86,0,0,1-22.81-38c15.31-28.67,47.1-48.89,82.84-48.89,50.16,0,92.52,39.81,92.52,86.93,0,17.78-8.75,36.72-15.5,49Zm175.06-70.71L382.83,457.34a25.85,25.85,0,0,1-44,0h0a25.86,25.86,0,0,1,0-27.07l92-149.73a25.86,25.86,0,0,1,22-12.31h.09A25.85,25.85,0,0,1,474.94,307.61Z" fill="url(#logo-gradient)"/>
+        </svg>
+        <span class="nav__logo-text">wot.technology</span>
+      </a>
+
+      <div class="domain-pills">
+        <a href="https://wot.rocks" class="domain-pill">wot.rocks</a>
+        <a href="https://now.pub" class="domain-pill">now.pub</a>
+        <a href="https://wot.technology" class="domain-pill domain-pill--active">wot.technology</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero tech-hero">
+    <div class="container">
+      <span class="spec-badge">v0.7 — January 2026</span>
+      <h1 class="hero__title animate-fade-in-up">
+        Protocol Specification
+      </h1>
+      <p class="hero__subtitle animate-fade-in-up animate-delay-1">
+        One primitive. Content-addressed. Self-describing schemas.
+        Build memory infrastructure that scales from kitchen table to solar system.
+      </p>
+      <div class="hero__actions animate-fade-in-up animate-delay-2">
+        <a href="#primitive" class="btn btn--primary">Read the Spec</a>
+        <a href="#early-access" class="btn btn--secondary">Get SDK Access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Documentation -->
+  <section class="section">
+    <div class="container">
+      <div class="doc-layout">
+        <!-- Table of Contents -->
+        <aside>
+          <nav class="toc">
+            <h4 class="toc__title">Contents</h4>
+            <ul class="toc__list">
+              <li><a href="#primitive" class="toc__link">The Primitive</a></li>
+              <li><a href="#thought-types" class="toc__link">Thought Types</a></li>
+              <li><a href="#wire-format" class="toc__link">Wire Format</a></li>
+              <li><a href="#identity" class="toc__link">Identity Collapse</a></li>
+              <li><a href="#schemas" class="toc__link">Self-Describing Schemas</a></li>
+              <li><a href="#discovery" class="toc__link">Discovery</a></li>
+              <li><a href="#peering" class="toc__link">Peering & Sync</a></li>
+              <li><a href="#early-access" class="toc__link">Early Access</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <!-- Content -->
+        <main>
+          <!-- The Primitive -->
+          <section id="primitive" class="doc-section">
+            <h2>The Primitive</h2>
+            <p>
+              WoT has exactly one primitive: <strong>Thought</strong>.
+              Everything — identities, connections, attestations, aspects, pools, trails, schemas —
+              is a thought with typed content.
+            </p>
+
+            <h3>Thought Structure</h3>
+            <div class="code-block">
+              <span class="code-block__label">Rust</span>
+              <pre><code class="language-rust">struct Thought {
+    cid: Cid,                    // hash(content + created_by + because)
+    content: TypedPayload,       // see Thought Types
+    created_by: Cid,             // identity CID
+    created_at: i64,             // timestamp (ms)
+    because: Vec&lt;Cid&gt;,           // what led to this thought
+    signature: [u8; 64],         // ed25519 sig over CID
+}</code></pre>
+            </div>
+
+            <h3>Properties</h3>
+            <ul style="color: var(--color-text-muted); margin-left: var(--space-6); list-style: disc;">
+              <li><strong>Immutable</strong> — once created, content never changes</li>
+              <li><strong>Content-addressed</strong> — CID derived from content hash</li>
+              <li><strong>Always attributed</strong> — <code>created_by</code> is required</li>
+              <li><strong>Signed</strong> — signature proves creator authenticity</li>
+              <li><strong>Grounded</strong> — <code>because</code> links to the thoughts that led here</li>
+            </ul>
+
+            <h3>The <code>because</code> Chain</h3>
+            <p class="text-muted">
+              Every thought references the thoughts that led to it. This is how trails form.
+              Walk <code>because</code> backward and you traverse the reasoning path.
+            </p>
+
+            <div class="terminal mt-4">
+              <div class="terminal__header">
+                <span class="terminal__dot terminal__dot--red"></span>
+                <span class="terminal__dot terminal__dot--yellow"></span>
+                <span class="terminal__dot terminal__dot--green"></span>
+              </div>
+              <div class="terminal__body">
+                <span class="terminal__comment"># Trail traversal</span><br>
+                <span class="terminal__output">thought_c.because → [thought_b]</span><br>
+                <span class="terminal__output">thought_b.because → [thought_a]</span><br>
+                <span class="terminal__output">thought_a.because → []</span><br>
+                <span class="terminal__comment"># c ← b ← a (reasoning chain)</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Thought Types -->
+          <section id="thought-types" class="doc-section">
+            <h2>Thought Types</h2>
+            <p>
+              Types are content schemas, not separate primitives. The type determines how
+              the thought is interpreted and queried.
+            </p>
+
+            <table class="tech-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>identity</td>
+                  <td>Participant who can sign (pubkey + name) — the bootstrap</td>
+                </tr>
+                <tr>
+                  <td>basic</td>
+                  <td>Simple content — notes, quotes, snippets</td>
+                </tr>
+                <tr>
+                  <td>connection</td>
+                  <td>Typed relationship between thoughts</td>
+                </tr>
+                <tr>
+                  <td>attestation</td>
+                  <td>Signed belief about another thought</td>
+                </tr>
+                <tr>
+                  <td>aspect</td>
+                  <td>Facet of identity (domain, role, context)</td>
+                </tr>
+                <tr>
+                  <td>pool</td>
+                  <td>Collection of thoughts with shared access</td>
+                </tr>
+                <tr>
+                  <td>schema</td>
+                  <td>Type definition for other thoughts</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>Connection Relations</h3>
+            <table class="tech-table">
+              <thead>
+                <tr>
+                  <th>Relation</th>
+                  <th>Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>supports</td><td>Evidence for</td></tr>
+                <tr><td>contradicts</td><td>Tension with</td></tr>
+                <tr><td>continues</td><td>Sequence/thread</td></tr>
+                <tr><td>derives_from</td><td>Source/provenance</td></tr>
+                <tr><td>vouches</td><td>Trust endorsement</td></tr>
+                <tr><td>member_of</td><td>Belongs to pool</td></tr>
+                <tr><td>same_as</td><td>Identity resolution</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Wire Format -->
+          <section id="wire-format" class="doc-section">
+            <h2>Wire Format</h2>
+
+            <h3>CID Computation</h3>
+            <p class="text-muted">
+              Content Identifiers use IPFS-compatible CIDv1 with BLAKE3 hashing:
+            </p>
+
+            <div class="code-block">
+              <pre><code class="language-text">CID = &lt;version&gt;&lt;codec&gt;&lt;multihash&gt;
+    = 0x01 (CIDv1) + 0x71 (dag-cbor) + 0x1e (blake3) + 0x20 (32 bytes) + &lt;digest&gt;
+
+Total: 36 bytes</code></pre>
+            </div>
+
+            <h3>Canonical CBOR</h3>
+            <p class="text-muted">
+              CID is computed over deterministic CBOR serialization of these fields only:
+            </p>
+
+            <table class="tech-table">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Included in CID</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>type</td><td>✓ Yes</td></tr>
+                <tr><td>content</td><td>✓ Yes</td></tr>
+                <tr><td>created_by</td><td>✓ Yes</td></tr>
+                <tr><td>because</td><td>✓ Yes</td></tr>
+                <tr><td>created_at</td><td>✕ No (mutable metadata)</td></tr>
+                <tr><td>signature</td><td>✕ No (computed over CID)</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Packet Header (96 bytes)</h3>
+            <div class="code-block">
+              <pre><code class="language-text">Offset  Size  Field
+------  ----  -----
+0       4     Magic ("WLSP")
+4       2     Version
+6       2     Flags (compression, encryption)
+8       40    Schema CID (36 + 4 padding)
+48      4     Payload Length
+52      40    Trust Anchor CID
+92      1     Payload Type (inline/reference)
+93      1     Hop Count
+94      2     Reserved</code></pre>
+            </div>
+          </section>
+
+          <!-- Identity Collapse -->
+          <section id="identity" class="doc-section">
+            <h2>Identity Collapse</h2>
+            <p>
+              A single ed25519 keypair encodes to multiple identity systems.
+              One key. Five namespaces. No translation tables.
+            </p>
+
+            <dl class="identity-collapse">
+              <dt>WoT Identity</dt>
+              <dd>CID of identity thought → bafyrei...</dd>
+              <dt>IPNS</dt>
+              <dd>Peer ID from pubkey → /ipns/12D3Koo...</dd>
+              <dt>Tor .onion</dt>
+              <dd>Pubkey → onion v3 address → abc...xyz.onion</dd>
+              <dt>TLS Client Cert</dt>
+              <dd>X.509 with ed25519 key → CN=&lt;pubkey-hash&gt;</dd>
+              <dt>IPv6 Client</dt>
+              <dd>Pubkey in address → 2001:db8::&lt;suffix&gt;</dd>
+            </dl>
+
+            <p class="text-muted mt-4">
+              The trust graph <em>is</em> the ACL. Same crypto for identity, access control,
+              and network permissions. Attestation controls the firewall.
+            </p>
+          </section>
+
+          <!-- Self-Describing Schemas -->
+          <section id="schemas" class="doc-section">
+            <h2>Self-Describing Schemas</h2>
+            <p>
+              Every thought declares how to interpret itself. Schemas are thoughts.
+              Schemas have schemas. The chain terminates at human-readable bootstrap.
+            </p>
+
+            <div class="stack-diagram">
+              <div class="layer">YOUR THOUGHT → schema_cid</div>
+              <div class="layer">TYPE DEFINITION → schema_cid</div>
+              <div class="layer">META-SCHEMA → schema_cid</div>
+              <div class="layer">PRIMITIVES → schema_cid</div>
+              <div class="layer">BOOTSTRAP (natural language + test vectors)</div>
+              <div class="layer" style="border-color: var(--color-primary);">TERMINAL: human-readable, self-evident</div>
+            </div>
+
+            <p class="text-muted mt-4">
+              <strong>Archival resilience:</strong> When <code>inline_bootstrap: true</code>,
+              the thought carries its complete interpretive lineage. Hand this to someone in 500 years
+              with no network — they can still decode it.
+            </p>
+          </section>
+
+          <!-- Discovery -->
+          <section id="discovery" class="doc-section">
+            <h2>Discovery</h2>
+            <p>
+              Three tiers, same identity. Fallback chain: DNS → Onion → IPNS.
+            </p>
+
+            <table class="tech-table">
+              <thead>
+                <tr>
+                  <th>Tier</th>
+                  <th>Properties</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>DNS/DNSSEC</td>
+                  <td>Fast, cached, human-readable, censorable</td>
+                </tr>
+                <tr>
+                  <td>Tor .onion</td>
+                  <td>Sovereign, censorship-resistant, slower</td>
+                </tr>
+                <tr>
+                  <td>IPNS</td>
+                  <td>Pure P2P, no central dependency</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>now.pub as Bootstrap</h3>
+            <div class="terminal mt-4">
+              <div class="terminal__header">
+                <span class="terminal__dot terminal__dot--red"></span>
+                <span class="terminal__dot terminal__dot--yellow"></span>
+                <span class="terminal__dot terminal__dot--green"></span>
+                <span class="terminal__title">DNS lookup</span>
+              </div>
+              <div class="terminal__body">
+                <span class="terminal__prompt">$</span> <span class="terminal__command">dig TXT keif.now.pub</span><br>
+                <span class="terminal__output">keif.now.pub.  300  IN  TXT  "wot=bafyrei...abc123"</span><br>
+                <span class="terminal__output">keif.now.pub.  300  IN  TXT  "ipns=12D3KooW...xyz"</span><br>
+                <span class="terminal__output">keif.now.pub.  300  IN  TXT  "onion=abc...xyz.onion"</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Peering & Sync -->
+          <section id="peering" class="doc-section">
+            <h2>Peering & Sync</h2>
+
+            <h3>Visibility Model</h3>
+            <table class="tech-table">
+              <thead>
+                <tr>
+                  <th>Visibility</th>
+                  <th>Behaviour</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>null</td>
+                  <td>Default — syncs to any connected peer/pool</td>
+                </tr>
+                <tr>
+                  <td>local_forever</td>
+                  <td>Never leaves local storage, even if referenced</td>
+                </tr>
+                <tr>
+                  <td>pool:&lt;cid&gt;</td>
+                  <td>Only syncs to members of specified pool</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>Gossip Sketch</h3>
+            <div class="code-block">
+              <pre><code class="language-text">Round N:
+  1. Pick random peer from trust graph
+  2. Exchange bloom filter of recent CIDs
+  3. Identify deltas (they have, I don't / I have, they don't)
+  4. Request missing CIDs
+  5. Verify attestation chains on receipt
+  6. Merge to local graph
+
+Heat = # of rounds since last touch
+Decay = natural from gossip round counting</code></pre>
+            </div>
+
+            <p class="text-muted mt-4">
+              No consensus needed — just propagation. CIDs are self-verifying, so forgery impossible.
+              Trust graph determines who you gossip with.
+            </p>
+          </section>
+
+          <!-- Early Access -->
+          <section id="early-access" class="doc-section">
+            <h2>Early SDK Access</h2>
+
+            <div class="signup-form">
+              <h3 class="signup-form__title">Get Early Access</h3>
+              <p class="signup-form__text">
+                Be among the first to build on WoT. SDK in Rust, with TypeScript bindings coming.
+              </p>
+
+              <form id="signup-form">
+                <div class="form-group">
+                  <label class="form-label" for="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-input"
+                    placeholder="you@example.com"
+                    required
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="github">GitHub Username (optional)</label>
+                  <input
+                    type="text"
+                    id="github"
+                    name="github"
+                    class="form-input"
+                    placeholder="your-github-username"
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="interest">What are you building? (optional)</label>
+                  <input
+                    type="text"
+                    id="interest"
+                    name="interest"
+                    class="form-input"
+                    placeholder="Local-first app, agent infrastructure, research..."
+                  >
+                </div>
+
+                <button type="submit" class="btn btn--primary btn--large" style="width: 100%;">
+                  Request SDK Access
+                </button>
+
+                <div id="form-message" style="margin-top: var(--space-4); display: none;"></div>
+              </form>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__text">
+        Spec v0.7 — January 2026
+      </p>
+      <ul class="footer__links">
+        <li><a href="https://wot.rocks" class="footer__link">wot.rocks</a></li>
+        <li><a href="https://now.pub" class="footer__link">now.pub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <script>
+    const form = document.getElementById('signup-form');
+    const message = document.getElementById('form-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const github = document.getElementById('github').value.trim() || null;
+      const interest = document.getElementById('interest').value.trim() || null;
+
+      message.style.display = 'block';
+      message.className = 'signup-form__success';
+      message.textContent = `You're on the early access list! We'll email you at ${email} when the SDK is ready.`;
+
+      form.reset();
+    });
+
+    // Smooth scroll for TOC links
+    document.querySelectorAll('.toc__link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
