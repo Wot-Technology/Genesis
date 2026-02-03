@@ -16,8 +16,8 @@ git clone https://github.com/wot-technology/wot-core
 cd wot-core && cargo build --release
 export PATH="$PATH:$(pwd)/target/release"
 
-# Or via cargo
-cargo install wot-daemon
+# Binary name is 'wot'
+alias wot="$(pwd)/target/release/wot"
 ```
 
 ### Initialize Your Identity
@@ -186,9 +186,9 @@ Default decay = 0.5. After 3 hops, trust approaches zero.
 
 **CLI:**
 ```bash
-wot trust score carol    # Your trust in carol
-wot trust vouchers bob   # Who vouches for bob
-wot vouch carol 0.8      # Vouch for carol
+wot trust score <carol_cid>    # Your trust in carol
+wot trust vouchers <bob_cid>   # Who vouches for bob
+wot vouch <carol_cid> -w 0.8   # Vouch for carol
 ```
 
 ### B.4 Pools & Sync
@@ -213,8 +213,8 @@ Pools are sync boundaries. Thoughts published to a pool sync with pool members.
 **CLI:**
 ```bash
 wot pool create project-alpha
-wot pool invite project-alpha --identity bob
-wot sync --pool project-alpha
+wot pool invite project-alpha <bob_cid>
+wot sync
 ```
 
 ### B.5 Attention System
@@ -254,10 +254,10 @@ for each subscriber:
 
 **CLI:**
 ```bash
-wot waterline set --urgency 0.7 --trust 0.3
+wot waterline set -u 0.7 -t 0.3
 wot subscribe add project-alpha --webhook https://...
-wot escalate <thought> --to bob --weight 0.9
-wot done <thought>  # mark as acted upon
+wot escalate <cid> --to <bob_cid> -w 0.9
+wot done <cid>  # mark as acted upon
 ```
 
 ---
