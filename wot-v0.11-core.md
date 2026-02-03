@@ -12,7 +12,7 @@
 
 ```bash
 # From source
-git clone https://github.com/anthropics/wot-core
+git clone https://github.com/wot-technology/wot-core
 cd wot-core && cargo build --release
 export PATH="$PATH:$(pwd)/target/release"
 
