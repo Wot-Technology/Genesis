@@ -1005,6 +1005,55 @@ geo:51.5,-0.1:emergency    — High-priority civil infrastructure
 }
 ```
 
+### 10.3.1 Identity-Based Mesh Authentication
+
+SSID ↔ Identity ↔ Network Auth ↔ Geolocation form a unified access system:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Service Provider                          │
+│  ┌─────────┐                                                │
+│  │ Auth    │ ◄── Client presents identity CID               │
+│  │ Server  │                                                │
+│  └────┬────┘                                                │
+│       │ Circulates authorization                            │
+│       ▼                                                     │
+│  ┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐    │
+│  │ Relay A │───│ Relay B │───│ Relay C │───│ Relay D │    │
+│  │ geo:1   │   │ geo:2   │   │ geo:3   │   │ geo:4   │    │
+│  └─────────┘   └─────────┘   └─────────┘   └─────────┘    │
+│       ▲             ▲             ▲             ▲          │
+│       └─────────────┴─────────────┴─────────────┘          │
+│                Client roams freely                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Flow:**
+1. Client authenticates with service provider (presents identity CID)
+2. Provider creates `mesh_authorization` thought
+3. Authorization circulates to all relays in provider's mesh
+4. Client roams across geo-pools — relays recognize authorized identity
+5. No re-authentication needed within mesh
+
+**Mesh Authorization Schema:**
+
+```json
+{
+  "type": "mesh_authorization",
+  "content": {
+    "client_identity": "cid:...",
+    "provider_identity": "cid:...",
+    "ssid": "commercial",
+    "geo_scope": ["cid:london-*", "cid:manchester-*"],
+    "valid_until": 1770500000000,
+    "tier": "premium"
+  },
+  "signature": "<provider signs>"
+}
+```
+
+**Key insight:** Identity IS the network credential. Share once with provider, roam everywhere in their mesh. Like enterprise WiFi but with cryptographic identity and geographic scope.
+
 ### 10.4 Relay Marketplace
 
 Relays advertise services. Clients discover and negotiate.
